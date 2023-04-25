@@ -2,11 +2,7 @@ header {
   border-bottom: 1px solid black;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
   background-color: #2b2b2bb5;
-  text-align: center;
   align-items: center;
+  text-align: center;
   z-index: 1;
-}
-
-.logo {
-  height: 12vmin;
 }
