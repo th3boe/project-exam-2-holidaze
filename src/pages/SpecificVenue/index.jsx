@@ -6,10 +6,10 @@ import styles from "./venue.module.css";
 
 // URL
 
-// const action = "/venues";
-// const method = "GET";
+const action = "/venues";
+const method = "GET";
 
-// const venueURL = API_HOLIDAZE_URL + action + `${id}`;
+const venueURL = API_HOLIDAZE_URL + action;
 
 // Product Page function
 
@@ -23,12 +23,12 @@ export default function SpecificVenue() {
   let { id } = useParams();
 
   useEffect(() => {
-    async function getVenue(venueUrl) {
+    async function getVenue() {
       try {
         setLoader(true);
         setUpsError(false);
 
-        const response = await fetch(venueUrl);
+        const response = await fetch(venueURL + `/${id}`, { method });
         const json = await response.json();
 
         setVenue(json);
@@ -40,8 +40,8 @@ export default function SpecificVenue() {
       }
     }
 
-    getVenue(`https://api.noroff.dev/api/v1/holidaze/venues/${id}`);
-  }, [id]);
+    getVenue();
+  }, []);
 
   // Content for the above try and catch!
 
