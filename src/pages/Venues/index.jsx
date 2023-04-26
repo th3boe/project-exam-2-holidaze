@@ -41,7 +41,7 @@ export default function Venues() {
         setUpsError(false);
         setLoader(true);
 
-        const response = await fetch(URL);
+        const response = await fetch(URL, { method });
         const json = await response.json();
 
         setVenues(json);
