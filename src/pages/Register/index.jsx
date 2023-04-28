@@ -1,5 +1,5 @@
 import React from "react";
-import RegistrationForm from "../../components/Forms/registrationForm.jsx";
+import RegForm from "../../components/Forms/regForm.jsx";
 import styles from "./register.module.css";
 
 // Register Function
@@ -10,7 +10,7 @@ export default function Register() {
       <div className={styles.card}>
         <h1 className={styles.titleCard}>Join our Holidaze family</h1>
         <div>
-          <RegistrationForm />
+          <RegForm />
         </div>
       </div>
     </div>

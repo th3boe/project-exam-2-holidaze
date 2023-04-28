@@ -17,12 +17,13 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-.alreadyMember a {
+.member a {
   color: #e7a600;
 }
 
-.alreadyMember a:hover {
+.member a:hover {
   color: #ffc126;
+  transition: color 0.2s;
 }
 
 /* The toggle switch for Holidaze manager */
@@ -86,13 +87,13 @@ input:checked + .slider:before {
 
 /* error */
 
-.errorMessage {
+.loader {
   text-align: center;
+  margin: 30px;
+}
+
+.errorMessage {
   margin: 10px auto;
-  padding: 10px;
-  max-width: 380px;
-  background-color: rgba(255, 0, 0, 0.515);
-  border: 1px solid rgb(116, 8, 8);
-  box-shadow: 2px 2px 4px 0 rgba(105, 1, 1, 0.363);
-  border-radius: 8px;
+  color: rgb(215, 7, 7);
+  font-weight: 500;
 }
