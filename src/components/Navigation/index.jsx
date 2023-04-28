@@ -1,12 +1,19 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import AuthContext from "../../context/AuthContext";
 import { FaHome } from "react-icons/fa";
 import styles from "./nav.module.css";
 
 export default function HeaderNav() {
+  const [authenticate, setAuthenticate] = useContext(AuthContext);
+
+  const signout = () => {
+    setAuthenticate(null);
+  };
   return (
     <div className={styles.nav}>
       <Navbar expand="lg" variant="dark">
@@ -21,11 +28,21 @@ export default function HeaderNav() {
                 <FaHome />
               </NavLink>
               <NavLink to="/venues">Venues</NavLink>
-              <NavLink to="/register">Register</NavLink>
             </Nav>
-            <Nav>
-              <NavLink to="/signin">Sign In</NavLink>
-            </Nav>
+
+            {authenticate ? (
+              <Nav>
+                <NavLink to="/profile">Profile</NavLink>
+                <NavLink onClick={signout} to="/">
+                  Sign Out
+                </NavLink>
+              </Nav>
+            ) : (
+              <Nav>
+                <NavLink to="/register">Register</NavLink>
+                <NavLink to="/signin">Sign In</NavLink>
+              </Nav>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
