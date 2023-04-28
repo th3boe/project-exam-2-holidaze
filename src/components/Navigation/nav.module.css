@@ -5,4 +5,5 @@
 
 .nav a:hover {
   color: #e7a600;
+  transition: color 0.2s;
 }

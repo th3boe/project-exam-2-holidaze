@@ -4,6 +4,7 @@ import { API_HOLIDAZE_URL } from "../../constants/api";
 import { BsPersonFill } from "react-icons/bs";
 import error from "../../images/404.jpg";
 import { Link } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 import styles from "./venues.module.css";
 
 // URL
@@ -58,7 +59,12 @@ export default function Venues() {
   // Content for the above try and catch!
 
   if (loader) {
-    return <div className={styles.loader}></div>;
+    return (
+      <div className={styles.loader}>
+        <Spinner animation="border" />
+        Loading venues...
+      </div>
+    );
   }
 
   if (upsError) {

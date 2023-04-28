@@ -60,3 +60,19 @@ a {
   color: greenyellow;
   text-align: end;
 }
+
+.loader {
+  text-align: center;
+  margin: 30px;
+}
+
+.errorMessage {
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 380px;
+  background-color: rgba(255, 0, 0, 0.515);
+  border: 1px solid rgb(116, 8, 8);
+  box-shadow: 2px 2px 4px 0 rgba(105, 1, 1, 0.363);
+  border-radius: 8px;
+}
