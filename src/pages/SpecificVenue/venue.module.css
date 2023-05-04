@@ -1,0 +1,103 @@
+.pageWrapper {
+  text-align: center;
+  padding: 40px 0;
+  color: white;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.informationCard {
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  background-color: #2b2b2bb5;
+  padding: 10px;
+  margin: 10px;
+  max-width: 800px;
+}
+
+.carouselImage {
+  height: 350px;
+  width: 80%;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  object-fit: cover;
+}
+
+.visuallyHidden {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.detailsTitle {
+  margin: 10px;
+  padding: 10px;
+  font-size: 23px;
+  font-weight: 300;
+  border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 10px;
+}
+
+.detailSpecific {
+  width: 250px;
+  text-align: center;
+}
+
+.dateCard {
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  padding: 12px;
+  width: fit-content;
+  margin: auto;
+}
+
+.member {
+  padding: 10px;
+}
+
+.member a {
+  color: #e7a600;
+}
+
+.member a:hover {
+  color: #ffc126;
+  transition: color 0.2s;
+}
+
+.owner {
+  margin-top: 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.avatarImage {
+  border-radius: 50%;
+  border: 1px solid black;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
