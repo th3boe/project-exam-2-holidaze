@@ -14,6 +14,8 @@ import SpecificVenue from "./pages/SpecificVenue/";
 import Register from "./pages/Register/";
 import SignIn from "./pages/SignIn/";
 import Profile from "./pages/Profile/";
+import CreateVenue from "./pages/CreateVenue";
+import CreateBooking from "./pages/CreateBooking/";
 
 // Bootstrap import
 
@@ -36,6 +38,8 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="profile/:name" element={<Profile />} />
+            <Route path="createvenue" element={<CreateVenue />} />
+            <Route path="createbooking" element={<CreateBooking />} />
           </Route>
         </Routes>
       </AuthProvider>
