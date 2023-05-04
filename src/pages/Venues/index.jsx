@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import { BsPersonFill } from "react-icons/bs";
-import error from "../../images/404.jpg";
+import PlaceholderImage from "../../images/placeholder.jpg";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./venues.module.css";
@@ -12,7 +12,7 @@ import styles from "./venues.module.css";
 const action = "/venues";
 const method = "GET";
 
-const URL = API_HOLIDAZE_URL + action;
+const URL = API_HOLIDAZE_URL + action + "?sort=created&sortOrder=desc";
 
 // Venues function
 
@@ -29,10 +29,13 @@ export default function Venues() {
   //   };
 
   const placeholder = "https://picsum.photos/id/80/200";
-  //   const placeholder = "%PUBLIC_URL%/../../../../public/404.jpg";
+  // const placeholder = { PlaceholderImage };
+  // const placeholder = "%PUBLIC_URL%/../../../../public/404.jpg";
   const mediaError = (e) => {
     e.target.src = placeholder;
   };
+
+  console.log(placeholder);
 
   //   console.log({ placeholder });
 
@@ -76,13 +79,22 @@ export default function Venues() {
     );
   }
 
-  //   if (mediaError === 404) {
-  //     return (
-  //       <div>
-  //         <img className={styles.venueImage} src={error} alt="error" />
-  //       </div>
-  //     );
-  //   }
+  // const image =
+  //   venues.media === undefined ? (
+  //     <img
+  //       className={styles.venueImage}
+  //       src={placeholderImage}
+  //       onError={mediaError}
+  //     />
+  //   ) : (
+  //     <img
+  //       className={styles.venueImage}
+  //       src={image.media}
+  //       alt="yes"
+  //       onError={mediaError}
+  //     />
+  //   );
+  // console.log(image);
 
   // Venues content!
 
@@ -117,15 +129,29 @@ export default function Venues() {
             <div key={venue.id}>
               <Link to={`/venue/${venue.id}`}>
                 <div className={styles.card}>
-                  <div className={styles.title}>
-                    <p>{venue.name}</p>
-                  </div>
+                  <span>
+                    {/* {venue.media ? (
+                      <img
+                        className={styles.venueImage}
+                        src={venue.media}
+                        alt="yes"
+                        onError={mediaError}
+                      />
+                    ) : (
+                      <img
+                        className={styles.venueImage}
+                        src={placeholder}
+                        onError={mediaError}
+                      /> */}
+                    {/* )} */}
+                  </span>
                   <img
                     className={styles.venueImage}
-                    src={venue.media ? venue.media : placeholder}
+                    src={venue.media === undefined ? placeholder : venue.media}
                     alt={venue.name}
                     onError={mediaError}
                   />
+                  {console.log(PlaceholderImage)}
 
                   {/* <img
                 className={styles.venueImage}
@@ -151,12 +177,17 @@ export default function Venues() {
                 />
               )}
               {console.log(venue.media)} */}
+                  <div className={styles.cardTitle}>
+                    <p>{venue.name}</p>
+                  </div>
                   <div className={styles.cardText}>
                     <p>
                       <BsPersonFill /> {venue.maxGuests}
                     </p>
                     <span className={styles.price}>
-                      <p>NOK {venue.price}</p>
+                      <p>
+                        NOK {venue.price} <br /> per night
+                      </p>
                     </span>
                   </div>
                 </div>
