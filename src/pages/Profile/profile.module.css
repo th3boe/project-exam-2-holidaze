@@ -20,3 +20,31 @@
   margin: 10px;
   max-width: 800px;
 }
+
+.avatar {
+  border-radius: 50%;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.profileText {
+  padding: 10px;
+}
+
+/* error css */
+
+.loader {
+  text-align: center;
+  margin: 30px;
+}
+
+.errorMessage {
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 380px;
+  background-color: rgba(255, 0, 0, 0.515);
+  border: 1px solid rgb(116, 8, 8);
+  box-shadow: 2px 2px 4px 0 rgba(105, 1, 1, 0.363);
+  border-radius: 8px;
+}
