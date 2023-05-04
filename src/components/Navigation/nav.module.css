@@ -7,3 +7,7 @@
   color: #e7a600;
   transition: color 0.2s;
 }
+
+.navRight {
+  right: inherit;
+}

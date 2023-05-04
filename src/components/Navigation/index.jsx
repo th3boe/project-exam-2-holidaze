@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import AuthContext from "../../context/AuthContext";
 import { FaHome } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
 import styles from "./nav.module.css";
 
 export default function HeaderNav() {
@@ -16,7 +17,7 @@ export default function HeaderNav() {
   };
   return (
     <div className={styles.nav}>
-      <Navbar expand="lg" variant="dark">
+      <Navbar expand="sm" variant="dark">
         <Container className="justify-content-end">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
@@ -32,8 +33,16 @@ export default function HeaderNav() {
 
             {authenticate ? (
               <Nav>
-                <NavLink to="/profile">Profile</NavLink>
-                <NavLink onClick={signout} to="/">
+                <NavLink to={"/profile" + `/${authenticate.name}`}>
+                  Signed in as <CgProfile />
+                  {""} {authenticate.name}
+                </NavLink>
+                {/* <NavLink to="/profile">Profile</NavLink> */}
+                <NavLink
+                  className="justify-content-end"
+                  onClick={signout}
+                  to="/"
+                >
                   Sign Out
                 </NavLink>
               </Nav>

@@ -4,7 +4,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const AuthContext = createContext([null, () => {}]);
 
 export const AuthProvider = (props) => {
-  const [authenticate, setAuthenticate] = useLocalStorage(["user"]);
+  const [authenticate, setAuthenticate] = useLocalStorage("user", null);
 
   return (
     <AuthContext.Provider value={[authenticate, setAuthenticate]}>

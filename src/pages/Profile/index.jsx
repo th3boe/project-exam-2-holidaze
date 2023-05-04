@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
@@ -7,6 +8,7 @@ import useAxios from "../../hooks/useAxios";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./profile.module.css";
+import Button from "../../components/Button";
 
 // URL
 
@@ -17,17 +19,23 @@ import styles from "./profile.module.css";
 const action = "/profiles";
 const method = "GET";
 
-const URL = API_HOLIDAZE_URL + action;
+// const URL = API_HOLIDAZE_URL + action;
 
 // `/${name}`;
 
 // Profile Function
 
 export default function Profile() {
-  const [profile, setProfile] = useState();
+  // const [profile, setProfile] = useState();
   const [loader, setLoader] = useState(false);
   const [upsError, setUpsError] = useState(false);
   const [user, setUser] = useState([]);
+  const [authenticate] = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const handleOnClickCreateVenue = () => {
+    navigate("/createvenue");
+  };
 
   // useEffect(() => {
   //   const user = JSON.parse(localStorage.getItem("user"));
@@ -43,27 +51,41 @@ export default function Profile() {
   // console.log(user.name);
   // const theUser = user.name;
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setUser(user);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   if (user) {
+  //     setUser(user);
+  //   }
+  // }, []);
 
-  console.log(user.name);
-  const theUser = user.name;
+  // console.log(user.name);
+  // const theUser = user.name;
+
+  // console.log(theUser);
 
   const http = useAxios();
-  const apiEndpoint = action + `/${theUser}`; // riktig endpoint for din url her
+  const axios = useAxios();
+  const URL = `${API_HOLIDAZE_URL}${action}/${authenticate.name}`;
 
   useEffect(() => {
     async function getProfile() {
+      // const user = JSON.parse(localStorage.getItem("user"));
+      // if (user) {
+      //   setUser(user);
+      // }
+
+      // const theUser = user.name;
+      // console.log(theUser);
+
+      // const apiEndpoint = action + `/${theUser}`;
+
       try {
         setUpsError(false);
         setLoader(true);
 
-        const response = await http.get(apiEndpoint);
-        console.log(response);
+        const response = await http.get(URL);
+        console.log("hello", response.data.name);
+        // const result = await axios.get(URL);
 
         setUser(response.data);
         setLoader(false);
@@ -148,7 +170,7 @@ export default function Profile() {
   if (upsError) {
     return (
       <div className={styles.errorMessage}>
-        Oh no.. Could not load your profile information..
+        Oh no, seems we could not load your profile information..
       </div>
     );
   }
@@ -178,10 +200,56 @@ export default function Profile() {
       <div className={styles.contentWrapper}>
         <div className={styles.informationCard}>
           <h1>
-            <CgProfile />
-            Profile
+            <CgProfile /> {""}
+            PROFILE
           </h1>
-          <p>this is your profile, {user.name}</p>
+          <img className={styles.avatar} src={user.avatar} />
+          <h2>{user.name}</h2>
+          <div>
+            {/* <p>
+              Please email with any queries at: <br /> {user.email}
+            </p> */}
+            {/* <p>
+              You're logged in as{" "}
+              {user.venueManager === true ? "Venue Manager" : "Customer"}
+            </p> */}
+          </div>
+
+          <div>
+            {user.venueManager === true ? (
+              <div className={styles.profileText}>
+                <p>
+                  Please email with any queries at: <br /> {user.email}
+                </p>
+                <p>
+                  You're signed in as a Venue Manager <br />
+                  View the venues you manage, what is currently booked or maybe
+                  create a new venue!
+                </p>
+                <Button name={"My Venues"} />
+                <Button name={"Currently Booked"} />
+                <Button
+                  name={"Create New Venue"}
+                  onClick={() => handleOnClickCreateVenue()}
+                />
+              </div>
+            ) : (
+              <div className={styles.profileText}>
+                <p>You're signed in as a Customer</p>
+                <p>
+                  Want to see what upcoming amazingness you have to look forward
+                  to? Click the below button to view your upcoming bookings! Or
+                  maybe you wish to view other opportunities?
+                </p>
+                <Button name={"My Bookings"} />
+                <Button name={"All Venues"} />
+              </div>
+            )}
+          </div>
+
+          {/* <p>
+            {user._count.venues} Venues | {user._count.bookings} Bookings
+          </p> */}
         </div>
       </div>
     </div>
