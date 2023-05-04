@@ -13,7 +13,7 @@ export default function useAxios() {
   });
 
   apiClient.interceptors.request.use(function (config) {
-    const token = authenticate.jwt;
+    const token = authenticate.accessToken;
     config.headers.Authorization = token ? `Bearer ${token}` : "";
 
     return config;
