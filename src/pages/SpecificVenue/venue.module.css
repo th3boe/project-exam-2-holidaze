@@ -4,11 +4,33 @@
   color: white;
 }
 
-.contentWrapper {
+/* .contentWrapper {
   display: flex;
   flex-direction: column;
   margin: auto;
   max-width: 1000px;
+} */
+
+.bookVenue {
+  width: fit-content;
+  padding: 10px;
+  margin: auto;
+}
+
+.inputSize {
+  width: 80%;
+  margin: 5px 5px 15px 5px;
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.507);
+  font-size: 15px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.label {
+  text-align: left;
 }
 
 .informationCard {
@@ -17,7 +39,7 @@
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
   background-color: #2b2b2bb5;
   padding: 10px;
-  margin: 10px;
+  margin: 10px auto;
   max-width: 800px;
 }
 
@@ -73,6 +95,10 @@
   margin: auto;
 }
 
+h4 {
+  margin: 15px;
+}
+
 .member {
   padding: 10px;
 }
@@ -92,6 +118,14 @@
   border-radius: 10px;
 }
 
+.bookings {
+  margin-top: 15px;
+  border: 1px solid black;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  border-radius: 10px;
+  padding: 10px;
+}
+
 .avatarImage {
   border-radius: 50%;
   border: 1px solid black;
@@ -100,4 +134,29 @@
   width: 200px;
   height: 200px;
   object-fit: cover;
+}
+
+.addedSuccess {
+  /* position: absolute; */
+  background-color: #579b57;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  border: 1px solid #329232;
+  border-radius: 5px;
+  padding: 10px 5px;
+  margin: 0px auto;
+  text-align: center;
+  /* top: 50%; */
+  width: 310px;
+  /* left: 50%; */
+  /* margin-left: -155px; */
+  animation: fader 3.5s linear forwards;
+}
+
+@keyframes fader {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
