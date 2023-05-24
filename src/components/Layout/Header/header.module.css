@@ -3,6 +3,19 @@ header {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
   background-color: #2b2b2bb5;
   align-items: center;
-  text-align: center;
+  /* text-align: center; */
   z-index: 1;
+}
+
+.headerPlacement {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoImage {
+  display: flex;
+  justify-content: left;
+  margin: 20px;
 }
