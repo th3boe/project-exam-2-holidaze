@@ -1,8 +1,13 @@
 .btn {
-  background-color: #2d2d2d00;
-  border: 1px solid white;
+  /* background-color: #2d2d2d7f; */
+  background-color: #c48b10a5;
+  background-color: #e7a60096;
+  /* background-color: #2d2d2d00; */
+  /* backdrop-filter: blur(10px); */
+  border: 1px solid #e7a600;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
-  color: white;
+  color: black;
+  /* color: #e7a600; */
   padding: 10px 30px;
   margin: 10px;
   border-radius: 0px;
@@ -13,8 +18,10 @@
 
 .btn:hover {
   transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+  background-color: #d59c21bd;
   border-radius: 20px;
-  color: white;
+  color: black;
+  /* color: #ffc126; */
   background-color: none;
-  border: 1px solid white;
+  border: 1px solid #e4a300;
 }
