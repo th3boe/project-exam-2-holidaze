@@ -1,0 +1,40 @@
+.topOfPage {
+  text-align: center;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px auto;
+  justify-content: center;
+}
+
+.bookingCard {
+  margin: 20px;
+  padding: 10px;
+  background-color: #2b2b2bb5;
+  color: white;
+  text-align: center;
+  border: 1px solid black;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
+  border-radius: 5px;
+  backdrop-filter: blur(8px);
+  width: 500px;
+}
+
+.cardInformation {
+  margin: 15px;
+  padding: 8px;
+  /* background-color: #2b2b2bb5; */
+  /* box-shadow: 0 0 8px 8px #2b2b2bb5; */
+  color: white;
+}
+
+.button {
+  margin: 8px;
+}
+
+.cardFooter {
+  border-top: 1px solid black;
+  padding: 5px;
+}
