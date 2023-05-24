@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import { BsPersonFill } from "react-icons/bs";
-import PlaceholderImage from "../../images/placeholder.jpg";
+// import PlaceholderImage from "../../images/placeholder.jpg";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./venues.module.css";
+import Carousel from "react-bootstrap/Carousel";
+import PlaceholderImage from "../../images/placeholder.jpg";
 
 // URL
 
@@ -100,7 +102,7 @@ export default function Venues() {
 
   return (
     <div>
-      <div className={styles.title}>
+      <div className={styles.visuallyHidden}>
         <h1>Venues!</h1>
         <p>Check out all the amazing venues.</p>
       </div>
@@ -127,60 +129,38 @@ export default function Venues() {
           .filter((venue) => venue.name.toLowerCase().includes(searchValue))
           .map((venue) => (
             <div key={venue.id}>
-              <Link to={`/venue/${venue.id}`}>
-                <div className={styles.card}>
-                  <span>
-                    {/* {venue.media ? (
+              <div className={styles.card}>
+                <div>
+                  {venue.media == 0 ? (
+                    <>
                       <img
                         className={styles.venueImage}
-                        src={venue.media}
-                        alt="yes"
+                        src={PlaceholderImage}
                         onError={mediaError}
                       />
-                    ) : (
-                      <img
-                        className={styles.venueImage}
-                        src={placeholder}
-                        onError={mediaError}
-                      /> */}
-                    {/* )} */}
-                  </span>
-                  <img
-                    className={styles.venueImage}
-                    src={venue.media === undefined ? placeholder : venue.media}
-                    alt={venue.name}
-                    onError={mediaError}
-                  />
-                  {console.log(PlaceholderImage)}
-
-                  {/* <img
-                className={styles.venueImage}
-                src={venue.media}
-                alt={venue.name}
-                onError={(this.onerror = null)(
-                  (this.src = "../../images/404.jpg")
-                )}
-              /> */}
-
-                  {/* <img
-                className={styles.venueImage}
-                src={venue.media || "../../images/logo-mobile.png"}
-                alt={venue.name}
-              /> */}
-                  {/* {venue.media.length >= 1 ? (
-                ""
-              ) : (
-                <imgji
-                  className={styles.venueImage}
-                  src={venue.media}
-                  alt={venue.name}
-                />
-              )}
-              {console.log(venue.media)} */}
-                  <div className={styles.cardTitle}>
-                    <p>{venue.name}</p>
-                  </div>
+                    </>
+                  ) : (
+                    <>
+                      <Carousel>
+                        {venue.media.map((image, index) => {
+                          return (
+                            <Carousel.Item key={index}>
+                              <img
+                                className={styles.venueImage}
+                                src={image}
+                                alt={image.name}
+                                onError={mediaError}
+                              />
+                            </Carousel.Item>
+                          );
+                        })}
+                      </Carousel>
+                    </>
+                  )}
+                </div>
+                <Link to={`/venue/${venue.id}`}>
                   <div className={styles.cardText}>
+                    <h2 className={styles.cardTitle}>{venue.name}</h2>
                     <p>
                       <BsPersonFill /> {venue.maxGuests}
                     </p>
@@ -190,8 +170,8 @@ export default function Venues() {
                       </p>
                     </span>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           ))}
       </div>
