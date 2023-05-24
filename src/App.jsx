@@ -14,8 +14,11 @@ import SpecificVenue from "./pages/SpecificVenue/";
 import Register from "./pages/Register/";
 import SignIn from "./pages/SignIn/";
 import Profile from "./pages/Profile/";
+import VenuesByProfile from "./pages/VenueByProfile/";
 import CreateVenue from "./pages/CreateVenue";
-import CreateBooking from "./pages/CreateBooking/";
+import UpdateVenue from "./pages/UpdateVenue";
+import UpdateAvatar from "./pages/UpdateAvatar";
+import MyBookings from "./pages/ViewBookingsByProfile";
 
 // Bootstrap import
 
@@ -38,8 +41,11 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="profile/:name" element={<Profile />} />
+            <Route path="profile/:name/venues" element={<VenuesByProfile />} />
             <Route path="createvenue" element={<CreateVenue />} />
-            <Route path="createbooking" element={<CreateBooking />} />
+            <Route path="updatevenue/:id" element={<UpdateVenue />} />
+            <Route path="updateavatar/:name" element={<UpdateAvatar />} />
+            <Route path="profile/:name/bookings" element={<MyBookings />} />
           </Route>
         </Routes>
       </AuthProvider>
