@@ -4,6 +4,14 @@
   color: white;
 }
 
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: auto;
+  max-width: 1000px;
+}
+
 .card {
   border: 1px solid black;
   border-radius: 10px;
@@ -12,4 +20,22 @@
   padding: 10px;
   margin: 10px auto;
   max-width: 800px;
+}
+
+.cardContent {
+  width: 330px;
+  align-items: center;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+@media only screen and (min-width: 700px) {
+  .contentWrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .cardContent {
+    max-width: 500px;
+  }
 }
