@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { API_HOLIDAZE_URL } from "../../constants/api";
-// import useAxios from "../../hooks/useAxios";
-
+import useAxios from "../../hooks/useAxios";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Button from "../Button/";
 import styles from "./form.module.css";
@@ -16,7 +16,7 @@ export default function CreateNewVenue() {
   const [authenticate] = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([""]);
   const [price, setPrice] = useState(0);
   const [maxGuests, setMaxGuests] = useState(0);
   const [rating, setRating] = useState(0);
@@ -27,18 +27,18 @@ export default function CreateNewVenue() {
     pets: false,
   });
   const [location, setLocation] = useState({
-    address: "",
-    city: "",
-    zip: "",
-    country: "",
-    continent: "",
+    address: "Unknown",
+    city: "Unknown",
+    zip: "Unknown",
+    country: "Unknown",
+    continent: "Unknown",
     lat: 0,
     lng: 0,
   });
   const [formError, setFormError] = useState({
     title: "",
     description: "",
-    images: [],
+    images: [""],
     price: 0,
     maxGuests: 0,
     rating: 0,
@@ -49,20 +49,25 @@ export default function CreateNewVenue() {
       pets: false,
     },
     location: {
-      address: "",
-      city: "",
-      zip: "",
-      country: "",
-      continent: "",
+      address: "Unknown",
+      city: "Unknown",
+      zip: "Unknown",
+      country: "Unknown",
+      continent: "Unknown",
       lat: 0,
       lng: 0,
     },
   });
+  const http = useAxios();
+  const navigate = useNavigate();
 
-  const handleFormSubmit = async (event) => {
+  async function handleFormSubmit(event) {
+    //   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // const http = useAxios();
+    // venue.status = "publish";
+
+    // console.log(venue);
 
     const venueInfo = {
       name: title,
@@ -75,6 +80,15 @@ export default function CreateNewVenue() {
       location: location,
     };
 
+    console.log(venueInfo);
+    console.log(images);
+
+    const test = JSON.stringify(venueInfo);
+    console.log(typeof test);
+
+    const newVenueInfo = JSON.parse(test);
+    console.log(typeof newVenueInfo);
+
     const errors = {
       name: title.length < 1 ? "Name is required" : "",
       description: description.length < 1 ? "A description is required" : "",
@@ -83,29 +97,42 @@ export default function CreateNewVenue() {
     if (Object.values(errors).some((err) => err !== "")) {
       setFormError(errors);
     } else {
-      alert("Thank you for creating a form!");
-
       console.log(venueInfo);
     }
 
-    const options = {
-      body: JSON.stringify(venueInfo),
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${authenticate.accessToken}`,
-      },
-    };
+    // const theVenueInfo = JSON.stringify(venueInfo);
+
+    // const options = {
+    //   body: JSON.stringify(venueInfo),
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${authenticate.accessToken}`,
+    //   },
+    // };
 
     try {
-      const response = await fetch(URL, options);
+      const response = await fetch(URL, {
+        method: "POST",
+        body: JSON.stringify(venueInfo),
+        headers: {
+          Authorization: `Bearer ${authenticate.accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.json();
+      console.log(data, venueInfo);
 
-      console.log(data);
+      //   const response = await http.post("/wp/v2/posts", venue);
+      //   console.log("response", response);
+      if (response.status === 201) {
+        navigate("/venues");
+      }
+      return data;
     } catch {
       alert("Create a form failed..");
-      setFormError(true);
+      console.log(formError);
     }
-  };
+  }
 
   const handleSpecialInputChange = (event) => {
     const { type, name, checked, value } = event.target;
@@ -152,7 +179,20 @@ export default function CreateNewVenue() {
           //   onChange={handleInputChange}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <label className={styles.label} htmlFor="media">
+        <label className={styles.label} htmlFor="images">
+          Venue Images:
+        </label>
+        <input
+          className={styles.inputSize}
+          type="text"
+          id="images"
+          name="images"
+          value={images}
+          placeholder="Please enter one or more image urls"
+          //   onChange={handleInputChange}
+          onChange={(e) => setImages(e.target.value.split(","))}
+        />
+        {/* <label className={styles.label} htmlFor="media">
           Venue Images:
         </label>
         <input
@@ -160,11 +200,11 @@ export default function CreateNewVenue() {
           type="text"
           id="media"
           name="media"
-          value={images.join(", ")}
+          value={images}
           placeholder="Please enter one or more image urls"
           //   onChange={handleInputChange}
-          onChange={(e) => setImages(e.target.value.split(", "))}
-        />
+          onChange={(e) => setImages(e.target.value)}
+        /> */}
         <label className={styles.label} htmlFor="price">
           Price per night?: *
         </label>
