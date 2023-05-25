@@ -7,7 +7,7 @@ export default function SignIn() {
   return (
     <HelmetProvider>
       <div className={styles.pageWrapper}>
-        {/* <Helmet>
+        <Helmet>
           <title>Holidaze | Sign In</title>
           <link
             rel="icon"
@@ -15,7 +15,7 @@ export default function SignIn() {
             href="/public/favicon.ico"
             sizes="16x16"
           />
-        </Helmet> */}
+        </Helmet>
         <div className={styles.card}>
           <h1 className={styles.titleCard}>Sign In</h1>
           <div>
