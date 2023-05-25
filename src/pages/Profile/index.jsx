@@ -139,7 +139,7 @@ export default function Profile() {
     <HelmetProvider>
       <div className={styles.pageWrapper}>
         <Helmet>
-          <title>Holidaze | {user.name}'s Profile</title>
+          <title>Holidaze | Profile</title>
           <link
             rel="icon"
             type="image/png"
