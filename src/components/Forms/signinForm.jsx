@@ -12,8 +12,6 @@ import styles from "./form.module.css";
 // URL
 
 const action = "/login";
-const method = "POST";
-
 const URL = API_HOLIDAZE_URL + TOKEN_AUTH + action;
 
 // Validation requirements
@@ -49,7 +47,11 @@ export default function SignInForm() {
   const [formError, setFormError] = useState(false);
   const [, setAuthenticate] = useContext(AuthContext);
 
+  // Navigate to Profile when sign in response ok.
+
   const navigate = useNavigate();
+
+  // POST function for signin.
 
   async function onSubmit(data) {
     const options = {
@@ -60,19 +62,14 @@ export default function SignInForm() {
     try {
       const response = await axios.post(URL, options);
 
-      console.log(response.data);
-
       if (response.status === 200) {
         setSubmitForm(true);
         setFormError(false);
         setAuthenticate(response.data);
         navigate("/profile" + `/${response.data.name}`);
-        console.log(response.data.name);
-        console.log(response.data, "You're signed in");
       }
 
       if (response.status !== 200) {
-        console.log(response.data, "NOT THIS TIME, SORRY");
         setFormError(true);
         setSubmitForm(false);
         alert("FAILURE ALERT! Your username and/or password is incorrect");
@@ -81,6 +78,8 @@ export default function SignInForm() {
       console.log(error);
     }
   }
+
+  // return form data.
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
