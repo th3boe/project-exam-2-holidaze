@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import { API_HOLIDAZE_URL } from "../../constants/api";
-import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Button from "../Button/";
@@ -9,16 +8,17 @@ import styles from "./form.module.css";
 // URL
 
 const action = "/venues";
-// const method = "POST";
 const URL = API_HOLIDAZE_URL + action;
+
+// Create venue function to be imported!
 
 export default function CreateNewVenue() {
   const [authenticate] = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([""]);
-  const [price, setPrice] = useState(0);
-  const [maxGuests, setMaxGuests] = useState(0);
+  const [price, setPrice] = useState("");
+  const [maxGuests, setMaxGuests] = useState("");
   const [rating, setRating] = useState(0);
   const [meta, setMeta] = useState({
     wifi: false,
@@ -39,8 +39,8 @@ export default function CreateNewVenue() {
     title: "",
     description: "",
     images: [""],
-    price: 0,
-    maxGuests: 0,
+    price: "",
+    maxGuests: "",
     rating: 0,
     meta: {
       wifi: false,
@@ -58,21 +58,20 @@ export default function CreateNewVenue() {
       lng: 0,
     },
   });
-  const http = useAxios();
+
+  // Navigation for when the venue has been created
+
   const navigate = useNavigate();
 
+  // POST function
+
   async function handleFormSubmit(event) {
-    //   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    // venue.status = "publish";
-
-    // console.log(venue);
 
     const venueInfo = {
       name: title,
       description: description,
-      media: images,
+      images: images.length > 0 ? images : null,
       price: parseInt(price),
       maxGuests: parseInt(maxGuests),
       rating: parseInt(rating),
@@ -80,18 +79,14 @@ export default function CreateNewVenue() {
       location: location,
     };
 
-    console.log(venueInfo);
-    console.log(images);
-
-    const test = JSON.stringify(venueInfo);
-    console.log(typeof test);
-
-    const newVenueInfo = JSON.parse(test);
-    console.log(typeof newVenueInfo);
+    // Error handling for required inputs
 
     const errors = {
       name: title.length < 1 ? "Name is required" : "",
       description: description.length < 1 ? "A description is required" : "",
+      price: price < 0 ? "Price is required" : "",
+      maxGuests:
+        maxGuests < 1 ? "A venue must accommodate at least one guest" : "",
     };
 
     if (Object.values(errors).some((err) => err !== "")) {
@@ -99,16 +94,6 @@ export default function CreateNewVenue() {
     } else {
       console.log(venueInfo);
     }
-
-    // const theVenueInfo = JSON.stringify(venueInfo);
-
-    // const options = {
-    //   body: JSON.stringify(venueInfo),
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${authenticate.accessToken}`,
-    //   },
-    // };
 
     try {
       const response = await fetch(URL, {
@@ -120,19 +105,17 @@ export default function CreateNewVenue() {
         },
       });
       const data = await response.json();
-      console.log(data, venueInfo);
 
-      //   const response = await http.post("/wp/v2/posts", venue);
-      //   console.log("response", response);
       if (response.status === 201) {
         navigate("/venues");
       }
-      return data;
     } catch {
       alert("Create a form failed..");
       console.log(formError);
     }
   }
+
+  // Handle input for location and meta.
 
   const handleSpecialInputChange = (event) => {
     const { type, name, checked, value } = event.target;
@@ -149,6 +132,8 @@ export default function CreateNewVenue() {
     }
   };
 
+  // Form details!
+
   return (
     <div>
       <form className={styles.form} onSubmit={handleFormSubmit}>
@@ -162,9 +147,12 @@ export default function CreateNewVenue() {
           name="name"
           value={title}
           placeholder="Enter venue name"
-          //   onChange={handleInputChange}
           onChange={(e) => setTitle(e.target.value)}
         />
+        {formError.name && (
+          <p className={styles.errorMessage}>{formError.name}</p>
+        )}
+
         <label className={styles.label} htmlFor="description">
           Description: *
         </label>
@@ -176,9 +164,12 @@ export default function CreateNewVenue() {
           name="description"
           value={description}
           placeholder="Please enter a description of the venue"
-          //   onChange={handleInputChange}
           onChange={(e) => setDescription(e.target.value)}
         />
+        {formError.description && (
+          <p className={styles.errorMessage}>{formError.description}</p>
+        )}
+
         <label className={styles.label} htmlFor="images">
           Venue Images:
         </label>
@@ -189,22 +180,9 @@ export default function CreateNewVenue() {
           name="images"
           value={images}
           placeholder="Please enter one or more image urls"
-          //   onChange={handleInputChange}
           onChange={(e) => setImages(e.target.value.split(","))}
         />
-        {/* <label className={styles.label} htmlFor="media">
-          Venue Images:
-        </label>
-        <input
-          className={styles.inputSize}
-          type="text"
-          id="media"
-          name="media"
-          value={images}
-          placeholder="Please enter one or more image urls"
-          //   onChange={handleInputChange}
-          onChange={(e) => setImages(e.target.value)}
-        /> */}
+
         <label className={styles.label} htmlFor="price">
           Price per night?: *
         </label>
@@ -215,9 +193,12 @@ export default function CreateNewVenue() {
           name="price"
           value={price}
           placeholder="Please enter price"
-          //   onChange={handleInputChange}
           onChange={(e) => setPrice(e.target.value)}
         />
+        {formError.price && (
+          <p className={styles.errorMessage}>{formError.price}</p>
+        )}
+
         <label className={styles.label} htmlFor="maxGuests">
           Max Amount of Guests: *
         </label>
@@ -228,9 +209,12 @@ export default function CreateNewVenue() {
           name="maxGuests"
           value={maxGuests}
           placeholder="Please enter guest amount"
-          //   onChange={handleInputChange}
           onChange={(e) => setMaxGuests(e.target.value)}
         />
+        {formError.maxGuests && (
+          <p className={styles.errorMessage}>{formError.maxGuests}</p>
+        )}
+
         <label className={styles.label} htmlFor="rating">
           Venue Rating:
         </label>
@@ -243,7 +227,6 @@ export default function CreateNewVenue() {
           min="0"
           max="5"
           placeholder="Please rate venue"
-          //   onChange={handleInputChange}
           onChange={(e) => setRating(e.target.value)}
         />
 
@@ -257,7 +240,6 @@ export default function CreateNewVenue() {
                 type="checkbox"
                 name="wifi"
                 checked={meta.wifi}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -270,7 +252,6 @@ export default function CreateNewVenue() {
                 type="checkbox"
                 name="parking"
                 checked={meta.parking}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -286,7 +267,6 @@ export default function CreateNewVenue() {
                 type="checkbox"
                 name="breakfast"
                 checked={meta.breakfast}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -299,7 +279,6 @@ export default function CreateNewVenue() {
                 type="checkbox"
                 name="pets"
                 checked={meta.pets}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -320,7 +299,6 @@ export default function CreateNewVenue() {
             name="address"
             value={location.address}
             placeholder="Please enter address"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="city">
@@ -333,7 +311,6 @@ export default function CreateNewVenue() {
             name="city"
             value={location.city}
             placeholder="Please enter city"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="zip">
@@ -346,7 +323,6 @@ export default function CreateNewVenue() {
             name="zip"
             value={location.zip}
             placeholder="Please enter zip"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="country">
@@ -359,7 +335,6 @@ export default function CreateNewVenue() {
             name="country"
             value={location.country}
             placeholder="Please enter country"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="continent">
@@ -372,7 +347,6 @@ export default function CreateNewVenue() {
             name="continent"
             value={location.continent}
             placeholder="Please enter continent"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="lat">
@@ -385,7 +359,6 @@ export default function CreateNewVenue() {
             name="lat"
             value={location.lat}
             placeholder="Please enter lat"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="lng">
@@ -398,7 +371,6 @@ export default function CreateNewVenue() {
             name="lng"
             value={location.lng}
             placeholder="Please enter lng"
-            // onChange={handleInputChange}
             onChange={handleSpecialInputChange}
           />
         </div>
