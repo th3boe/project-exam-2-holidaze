@@ -1,3 +1,4 @@
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
@@ -5,6 +6,7 @@ import AuthContext from "../../context/AuthContext";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import DatePicker from "react-datepicker";
 import Carousel from "react-bootstrap/Carousel";
+import Spinner from "react-bootstrap/Spinner";
 
 import { BsStarFill, BsFillPersonFill } from "react-icons/bs";
 import { IoMdPricetags } from "react-icons/io";
@@ -14,9 +16,8 @@ import PlaceholderImage from "../../images/placeholder.jpg";
 import styles from "./venue.module.css";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { number } from "yup";
 
-// URL
+// URL for getting specific venue, and making a booking.
 
 const action = "/venues";
 const method = "GET";
@@ -25,7 +26,6 @@ const venueURL = API_HOLIDAZE_URL + action;
 
 const bookingAction = "/bookings";
 const bookingURL = API_HOLIDAZE_URL + bookingAction;
-const deleteURL = API_HOLIDAZE_URL + action;
 
 // Product Page function
 
@@ -70,10 +70,8 @@ export default function SpecificVenue() {
   };
 
   const placeholder = "https://picsum.photos/200";
-  // const placeholder = { PlaceholderImage };
-  // const placeholder = "%PUBLIC_URL%/../../../../public/404.jpg";
   const mediaError = (e) => {
-    e.target.src = { PlaceholderImage };
+    e.target.src = placeholder;
   };
 
   useEffect(() => {
@@ -103,7 +101,12 @@ export default function SpecificVenue() {
   // Content for the above try and catch!
 
   if (loader || !venue) {
-    return <div className="loader"></div>;
+    return (
+      <div className={styles.loader}>
+        <Spinner animation="border" />
+        Loading venue...
+      </div>
+    );
   }
 
   if (upsError) {
@@ -122,26 +125,7 @@ export default function SpecificVenue() {
     }));
   }
 
-  // function booked() {
-  //   return(
-  //     venue.bookings.map((booking) => ({
-  //       (<div>
-  //       </div>)
-  //     }))
-  //   )
-  // }
-
-  // function booked() {
-  //   return (
-  //     <span>
-  //       {venue.bookings.map((booking) => ({
-  //         <div>
-  //       }))}
-  //     </span>
-  //   )
-  // }
-
-  // make booking!
+  // Function to make a booking!
 
   async function handleFormSubmit(event) {
     event.preventDefault();
@@ -179,43 +163,21 @@ export default function SpecificVenue() {
       const data = await response.json();
 
       console.log(data, bookingInfo);
-      setAddedBooking(true);
+      if (response.status === 201) {
+        setAddedBooking(true);
+      }
     } catch {
       alert("Booking failed..");
       console.log(formError);
     }
   }
 
-  // const remove = (id) => {
-  //   // if (window.confirm("Do you want to delete this venue?")) {
-  //   fetch(deleteURL + `/${id}`, { method: "DELETE" })
-  //     .then(() => {})
-  //     .catch((formError) => {
-  //       alert("Delete failed..");
-  //       console.log(formError);
-  //     });
-  //   // }
-  // };
+  // URL for Delete Venue.
 
-  // const http = useAxios;
+  const deleteAction = "/venues/";
+  const deleteURL = `${API_HOLIDAZE_URL}${deleteAction}${id}`;
 
-  // async function handleDelete() {
-  //   const confirmDelete = window.confirm("Do you want to delete this venue?");
-
-  //   if (confirmDelete) {
-  //     try {
-  //       await http.delete(deleteURL + `/${id}`);
-  //     } catch (formError) {
-  //       console.log(formError);
-  //       setFormError(true);
-  //     }
-  //   }
-  // }
-
-  //   const history = useHistory();
-  const action = "/venues/";
-
-  const deleteURL = `${API_HOLIDAZE_URL}${action}${id}`;
+  // Delete function.
 
   async function handleDelete() {
     const confirmDelete = window.confirm("Do you wish to delete this venue?");
@@ -230,282 +192,252 @@ export default function SpecificVenue() {
     }
   }
 
-  return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.contentWrapper}>
-        <div className={styles.informationCard}>
-          <h1>{venue.name}</h1>
-          <p>{venue.description}</p>
-          <div className={styles.details}>
-            <p className={styles.detailSpecific}>
-              <IoMdPricetags /> {venue.price} NOK per night
-            </p>
-            <p>|</p>
-            <p className={styles.detailSpecific}>
-              <BsFillPersonFill /> {""}
-              {venue.maxGuests > 1 ? (
-                <>{venue.maxGuests} people</>
-              ) : (
-                <>{venue.maxGuests} person</>
-              )}
-            </p>
-            <p>|</p>
-            <p className={styles.detailSpecific}>
-              <BsStarFill /> ({venue.rating})
-            </p>
-          </div>
-          <div>
-            {venue.media == 0 ? (
-              <>
-                <img
-                  className={styles.carouselImage}
-                  src={PlaceholderImage}
-                  onError={mediaError}
-                />
-              </>
-            ) : (
-              <>
-                <Carousel>
-                  {venue.media.map((image, index) => {
-                    return (
-                      <Carousel.Item key={index}>
-                        <img
-                          className={styles.carouselImage}
-                          src={image}
-                          alt={venue.name}
-                          onError={mediaError}
-                        />
-                      </Carousel.Item>
-                    );
-                  })}
-                </Carousel>
-              </>
-            )}
+  // return data.
 
-            {/* {venue.media.map((image) => {
-              return (
-                <div>
-                  <Carousel variant="dark">
-                    <Carousel.Item>
-                      <img className="d-block w-100" src={image} />
-                    </Carousel.Item>
-                  </Carousel>
-                </div>
-              );
-            })} */}
-          </div>
-          <h2 className={styles.detailsTitle}>DETAILS</h2>
-          <div className={styles.details}>
-            <p>{venue.meta.wifi === true ? "WiFi Included" : "No WiFi"}</p>
-            <p>|</p>
-            <p>{venue.meta.parking === true ? "Free Parking" : "No Parking"}</p>
-            <p>|</p>
-            <p>
-              {venue.meta.breakfast === true
-                ? "Breakfast Included"
-                : "No Breakfast"}
-            </p>
-            <p>|</p>
-            <p>
-              {venue.meta.pets === true ? "Pets Allowed" : "No Pets Allowed"}
-            </p>
-          </div>
-          {/* <div>
-            {venue.owner.name === authenticate.name ? (
-              <>
-                <Button name={"Edit Venue"} />
-                <Button name={"Delete Venue"} />
-              </>
-            ) : (
-              <Button
-                name={"Book Now"}
-                onClick={() => handleOnClickCreateBooking()}
-              />
-            )}
-          </div> */}
-          <div>
-            {authenticate ? (
-              <>
-                <div>
-                  {venue.owner.name === authenticate.name ? (
-                    <>
-                      <Button
-                        name={"Edit Venue"}
-                        onClick={() => handleOnClickEditVenue()}
-                      />
-                      <Button name={"Delete Venue"} onClick={handleDelete} />
-                      <div>
-                        <h3 className={styles.detailsTitle}>
-                          UPCOMING BOOKINGS
-                        </h3>
-                        <h4>calender</h4>
-                        <div className={styles.dateCard}>
-                          <DatePicker
-                            excludeDateIntervals={alreadyBooked()}
-                            selectsRange
-                            selectsDisabledDaysInRange
-                            inline
+  return (
+    <HelmetProvider>
+      <div className={styles.pageWrapper}>
+        <Helmet>
+          <title>Holidaze | {venue.name}</title>
+          <link
+            rel="icon"
+            type="image/png"
+            href="/public/favicon.ico"
+            sizes="16x16"
+          />
+        </Helmet>
+        <div className={styles.contentWrapper}>
+          <div className={styles.informationCard}>
+            <h1>{venue.name}</h1>
+            <p>{venue.description}</p>
+            <div className={styles.details}>
+              <p className={styles.detailSpecific}>
+                <IoMdPricetags /> {venue.price} NOK per night
+              </p>
+              <p>|</p>
+              <p className={styles.detailSpecific}>
+                <BsFillPersonFill /> {""}
+                {venue.maxGuests > 1 ? (
+                  <>{venue.maxGuests} people</>
+                ) : (
+                  <>{venue.maxGuests} person</>
+                )}
+              </p>
+              <p>|</p>
+              <p className={styles.detailSpecific}>
+                <BsStarFill /> ({venue.rating})
+              </p>
+            </div>
+            <div>
+              {venue.media == 0 ? (
+                <>
+                  <img
+                    className={styles.carouselImage}
+                    src={PlaceholderImage}
+                    onError={mediaError}
+                  />
+                </>
+              ) : (
+                <>
+                  <Carousel>
+                    {venue.media.map((image, index) => {
+                      return (
+                        <Carousel.Item key={index}>
+                          <img
+                            className={styles.carouselImage}
+                            src={image}
+                            alt={venue.name}
+                            onError={mediaError}
                           />
+                        </Carousel.Item>
+                      );
+                    })}
+                  </Carousel>
+                </>
+              )}
+            </div>
+            <h2 className={styles.detailsTitle}>DETAILS</h2>
+            <div className={styles.details}>
+              <p>{venue.meta.wifi === true ? "WiFi Included" : "No WiFi"}</p>
+              <p>|</p>
+              <p>
+                {venue.meta.parking === true ? "Free Parking" : "No Parking"}
+              </p>
+              <p>|</p>
+              <p>
+                {venue.meta.breakfast === true
+                  ? "Breakfast Included"
+                  : "No Breakfast"}
+              </p>
+              <p>|</p>
+              <p>
+                {venue.meta.pets === true ? "Pets Allowed" : "No Pets Allowed"}
+              </p>
+            </div>
+            <div>
+              {authenticate ? (
+                <>
+                  <div>
+                    {venue.owner.name === authenticate.name ? (
+                      <>
+                        <Button
+                          name={"Edit Venue"}
+                          onClick={() => handleOnClickEditVenue()}
+                        />
+                        <Button name={"Delete Venue"} onClick={handleDelete} />
+                        <div>
+                          <h3 className={styles.detailsTitle}>
+                            UPCOMING BOOKINGS
+                          </h3>
+                          <h4>calender</h4>
+                          <div className={styles.dateCard}>
+                            <DatePicker
+                              excludeDateIntervals={alreadyBooked()}
+                              selectsRange
+                              selectsDisabledDaysInRange
+                              inline
+                            />
+                          </div>
+
+                          <h4>booking details</h4>
+
+                          {venue.bookings.length === 0 ? (
+                            <p>
+                              Currently no bookings have been made for this
+                              venue!
+                            </p>
+                          ) : (
+                            <>
+                              {venue.bookings.map((booking) => {
+                                return (
+                                  <div className={styles.bookings}>
+                                    <p>
+                                      <BsFillPersonFill /> {booking.guests}
+                                    </p>
+                                    <p>
+                                      {new Date(
+                                        booking.dateFrom
+                                      ).toDateString()}{" "}
+                                      <br />
+                                      until <br />
+                                      {new Date(booking.dateTo).toDateString()}
+                                    </p>
+                                    <p>
+                                      Created at{" "}
+                                      {new Date(booking.created).toDateString()}{" "}
+                                      at {""}
+                                      {new Date(
+                                        booking.created
+                                      ).toLocaleTimeString()}
+                                    </p>
+                                  </div>
+                                );
+                              })}
+                            </>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <h2 className={styles.detailsTitle}>
+                          MAKE YOUR BOOKING
+                        </h2>
+
+                        <div className={styles.bookVenue}>
+                          <form
+                            className={styles.form}
+                            onSubmit={handleFormSubmit}
+                          >
+                            <label className={styles.label} htmlFor="guests">
+                              Amount of Guests: *
+                            </label>
+                            <input
+                              className={styles.inputSize}
+                              type="number"
+                              id="guests"
+                              name="guests"
+                              value={guests}
+                              placeholder="Please enter guest amount"
+                              onChange={(e) => setGuests(e.target.value)}
+                            />
+
+                            <label className={styles.label} htmlFor="calender">
+                              Pick wished dates for your stay:
+                            </label>
+                            <DatePicker
+                              className={styles.inputSize}
+                              placeholderText="select wished travel dates"
+                              id="calender"
+                              excludeDateIntervals={alreadyBooked()}
+                              selectsRange={true}
+                              startDate={startDate}
+                              endDate={endDate}
+                              onChange={(update) => {
+                                setDateRange(update);
+                              }}
+                              withPortal
+                            />
+                            <div className={styles.button}>
+                              <Button name={"Book Now"} type="submit" />
+                            </div>
+                          </form>
+                          {addedBooking ? (
+                            <p className={styles.addedSuccess}>
+                              Your booking has been successfully added.
+                            </p>
+                          ) : null}
                         </div>
 
-                        <h4>booking details</h4>
-
-                        {console.log(venue.bookings.length)}
-                        {venue.bookings.length === 0 ? (
+                        <div className={styles.owner}>
+                          <h3 className={styles.detailsTitle}>VENUE OWNER</h3>
+                          <img
+                            className={styles.avatarImage}
+                            src={
+                              venue.owner.avatar
+                                ? venue.owner.avatar
+                                : placeholder
+                            }
+                            alt={venue.owner}
+                          />
                           <p>
-                            Currently no bookings have been made for this venue!
+                            {venue.owner.name} <br /> {venue.owner.email}
                           </p>
-                        ) : (
-                          <>
-                            {venue.bookings.map((booking) => {
-                              return (
-                                <div className={styles.bookings}>
-                                  <p>
-                                    <BsFillPersonFill /> {booking.guests}
-                                  </p>
-                                  <p>
-                                    {new Date(booking.dateFrom).toDateString()}{" "}
-                                    <br />
-                                    until <br />
-                                    {new Date(booking.dateTo).toDateString()}
-                                  </p>
-                                  <p>
-                                    Created at{" "}
-                                    {new Date(booking.created).toDateString()}{" "}
-                                    at {""}
-                                    {new Date(
-                                      booking.created
-                                    ).toLocaleTimeString()}
-                                  </p>
-                                </div>
-                              );
-                            })}
-                          </>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* <Button
-                        name={"Book Now"}
-                        onClick={() => handleOnClickCreateBooking()}
-                      /> */}
-
-                      <h2 className={styles.detailsTitle}>MAKE YOUR BOOKING</h2>
-
-                      <div className={styles.bookVenue}>
-                        <form
-                          className={styles.form}
-                          onSubmit={handleFormSubmit}
-                        >
-                          <label className={styles.label} htmlFor="guests">
-                            Amount of Guests: *
-                          </label>
-                          <input
-                            className={styles.inputSize}
-                            type="number"
-                            id="guests"
-                            name="guests"
-                            value={guests}
-                            placeholder="Please enter guest amount"
-                            onChange={(e) => setGuests(e.target.value)}
-                          />
-
-                          <label className={styles.label} htmlFor="calender">
-                            Pick wished dates for your stay:
-                          </label>
-                          <DatePicker
-                            className={styles.inputSize}
-                            placeholderText="select wished travel dates"
-                            id="calender"
-                            excludeDateIntervals={alreadyBooked()}
-                            selectsRange={true}
-                            startDate={startDate}
-                            endDate={endDate}
-                            onChange={(update) => {
-                              setDateRange(update);
-                            }}
-                            withPortal
-                          />
-                          <div className={styles.button}>
-                            <Button name={"Book Now"} type="submit" />
-                          </div>
-                        </form>
-                        {addedBooking ? (
-                          <p className={styles.addedSuccess}>
-                            Your booking has been successfully added.
+                          <p>
+                            Created at {new Date(venue.created).toDateString()}{" "}
+                            at {""}
+                            {new Date(venue.created).toLocaleTimeString()}
                           </p>
-                        ) : null}
-                      </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.dateCard}>
+                    <p>View when this venue is available:</p>
 
-                      <div className={styles.owner}>
-                        <h3 className={styles.detailsTitle}>VENUE OWNER</h3>
-                        <img
-                          className={styles.avatarImage}
-                          src={
-                            venue.owner.avatar
-                              ? venue.owner.avatar
-                              : placeholder
-                          }
-                          alt={venue.owner}
-                        />
-                        <p>
-                          {venue.owner.name} <br /> {venue.owner.email}
-                        </p>
-                        <p>
-                          Created at {new Date(venue.created).toDateString()} at{" "}
-                          {""}
-                          {new Date(venue.created).toLocaleTimeString()}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.dateCard}>
-                  <p>View when this venue is available:</p>
-
-                  <DatePicker
-                    excludeDateIntervals={alreadyBooked()}
-                    selectsRange
-                    selectsDisabledDaysInRange
-                    inline
-                  />
-                </div>
-                <div>
-                  <p className={styles.member}>
-                    Do you wish to book this venue?
-                    <Link to="/signin"> Sign In here</Link>
-                    <br /> Not a member?
-                    <Link to="/register"> Create new!</Link>
-                  </p>
-                </div>
-              </>
-            )}
+                    <DatePicker
+                      excludeDateIntervals={alreadyBooked()}
+                      selectsRange
+                      selectsDisabledDaysInRange
+                      inline
+                    />
+                  </div>
+                  <div>
+                    <p className={styles.member}>
+                      Do you wish to book this venue?
+                      <Link to="/signin"> Sign In here</Link>
+                      <br /> Not a member?
+                      <Link to="/register"> Create new!</Link>
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-          {/* <div className={styles.owner}>
-            <h3 className={styles.detailsTitle}>VENUE OWNER</h3>
-            <img
-              className={styles.avatarImage}
-              src={venue.owner.avatar ? venue.owner.avatar : placeholder}
-            />
-            <p>
-              {venue.owner.name} <br /> {venue.owner.email}
-            </p>
-            <p>
-              Created at {new Date(venue.created).toDateString()} at {""}
-              {new Date(venue.created).toLocaleTimeString()}
-            </p>
-          </div> */}
         </div>
       </div>
-    </div>
+    </HelmetProvider>
   );
 }
-
-// [addDays(new Date(), 1), addDays(new Date(), 5)];
-// DeletePostButton.propTypes = {
-//   id: PropTypes.number.isRequired,
-// };

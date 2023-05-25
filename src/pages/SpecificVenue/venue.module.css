@@ -4,13 +4,6 @@
   color: white;
 }
 
-/* .contentWrapper {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  max-width: 1000px;
-} */
-
 .bookVenue {
   width: fit-content;
   padding: 10px;
@@ -56,7 +49,7 @@
   border: 0;
   padding: 0;
   margin: 0;
-  position: absolute !important;
+  position: absolute;
   height: 1px;
   width: 1px;
   overflow: hidden;
@@ -136,8 +129,25 @@ h4 {
   object-fit: cover;
 }
 
+/* error and success css */
+
+.loader {
+  text-align: center;
+  margin: 30px;
+}
+
+.errorMessage {
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 380px;
+  background-color: rgba(255, 0, 0, 0.515);
+  border: 1px solid rgb(116, 8, 8);
+  box-shadow: 2px 2px 4px 0 rgba(105, 1, 1, 0.363);
+  border-radius: 8px;
+}
+
 .addedSuccess {
-  /* position: absolute; */
   background-color: #579b57;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
   border: 1px solid #329232;
@@ -145,10 +155,7 @@ h4 {
   padding: 10px 5px;
   margin: 0px auto;
   text-align: center;
-  /* top: 50%; */
   width: 310px;
-  /* left: 50%; */
-  /* margin-left: -155px; */
   animation: fader 3.5s linear forwards;
 }
 
