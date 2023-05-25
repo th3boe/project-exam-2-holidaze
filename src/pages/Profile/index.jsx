@@ -1,10 +1,9 @@
 import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
 import { RiImageEditLine } from "react-icons/ri";
 import AuthContext from "../../context/AuthContext";
-import axios from "axios";
 import useAxios from "../../hooks/useAxios";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import Modal from "react-bootstrap/Modal";
@@ -15,18 +14,7 @@ import Spinner from "react-bootstrap/Spinner";
 import styles from "./profile.module.css";
 import Button from "../../components/Button";
 
-// URL
-
-// const user = AuthContext();
-
-// console.log(user.name);
-
-const action = "/profiles";
-const method = "GET";
-
-const actionEnd = "/media";
-
-// const URL = API_HOLIDAZE_URL + action;
+// Schema for avatarURL validation.
 
 const schema = yup.object({
   avatar: yup
@@ -35,9 +23,7 @@ const schema = yup.object({
     .required("If you wish to update, enter a valid URL"),
 });
 
-// `/${name}`;
-
-// Profile Function
+// Profile
 
 export default function Profile() {
   const {
@@ -48,12 +34,13 @@ export default function Profile() {
     resolver: yupResolver(schema),
   });
 
-  // const [profile, setProfile] = useState();
   const [loader, setLoader] = useState(false);
   const [upsError, setUpsError] = useState(false);
   const [user, setUser] = useState([]);
   const [show, setShow] = useState(false);
   const [authenticate] = useContext(AuthContext);
+
+  // Navigation for buttons!
 
   const navigate = useNavigate();
   const handleOnClickCreateVenue = () => {
@@ -69,39 +56,21 @@ export default function Profile() {
     navigate("/profile" + `/${authenticate.name}` + "/bookings");
   };
 
+  // Modal for avatar update.
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   if (user) {
-  //     setUser(user);
-  //   }
-  // }, []);
+  // URL
 
-  // // Object.entries(localStorage).map(([key, valueJSON]) => {
-  // //   const value = JSON.parse(valueJSON);
-  // //   console.log(value.name);
-  // // });
-  // console.log(user.name);
-  // const theUser = user.name;
-
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   if (user) {
-  //     setUser(user);
-  //   }
-  // }, []);
-
-  // console.log(user.name);
-  // const theUser = user.name;
-
-  // console.log(theUser);
-
+  const action = "/profiles";
+  const actionEnd = "/media";
   const http = useAxios();
-  const axios = useAxios();
+
   const URL = `${API_HOLIDAZE_URL}${action}/${authenticate.name}`;
   const avatarURL = `${API_HOLIDAZE_URL}${action}/${authenticate.name}${actionEnd}`;
+
+  // Get profile function.
 
   useEffect(() => {
     async function getProfile() {
@@ -110,8 +79,6 @@ export default function Profile() {
         setLoader(true);
 
         const response = await http.get(URL);
-        console.log("hello", response.data.name);
-        // const result = await axios.get(URL);
 
         setUser(response.data);
         setLoader(false);
@@ -122,65 +89,6 @@ export default function Profile() {
     }
     getProfile();
   }, []);
-
-  // useEffect(() => {
-  //   async function Hello() {
-  //     try {
-  //       const response = await http.get(apiEndpoint);
-  //       console.log(response);
-  //       // set data
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   Hello();
-  // }, []);
-
-  //   async function getProfile(user) {
-  //     // const options = {
-  //     //   email: user.email,
-  //     //   password: user.password,
-  //     // };
-  //     const body = JSON.stringify(user);
-  //     // const options = {
-  //     //   headers: {
-  //     //     Authorization: "Bearer " + accessToken,
-  //     //   },
-  //     // };
-
-  //     try {
-  //       setUpsError(false);
-  //       setLoader(true);
-
-  //       console.log(theUser);
-
-  //       // const response = await axios.get(URL + `/${theUser}`);
-  //       // console.log(config);
-
-  //       const response = await fetch(URL + `/${theUser}`, {
-  //         options,
-  //         method: method,
-  //         body: body,
-  //       });
-  //       const profileInfo = await response.json();
-
-  //       // const response = await axios.get(URL + `/${user.name}`,  headers: {
-  //       //   "Content-Type": "application/json",
-  //       // });
-  //       console.log(profileInfo);
-
-  //       // const response = await fetch(URL + `/${user.name}`, { method });
-
-  //       setProfile(profileInfo);
-  //       setLoader(false);
-  //     } catch (error) {
-  //       setLoader(false);
-  //       setUpsError(true);
-  //     }
-  //   }
-
-  //   getProfile();
-  // }, []);
 
   // Content for the above try and catch!
 
@@ -201,64 +109,9 @@ export default function Profile() {
     );
   }
 
-  // const [authenticate, setAuthenticate] = useContext(AuthContext);
-
-  // const user = (authenticate = () => {
-  //   "Profile";
-  // });
-  // // const userName = user.name;
-
-  // console.log(user);
-  // const [myLocalStorageData, setMyLocalStorageData] = useState({});
-  // useEffect(() => {
-  //   //logic for getting a value from local storage stored under the key 'key'
-  //   const data = localStorage.getItem("key");
-  //   setMyLocalStorageData(JSON.parse(data));
-  //   console.log(data);
-  // }, []);
-
-  // {
-  //   Object.entries(localStorage).map(([key, valueJSON]) => {
-  //     const value = JSON.parse(valueJSON);
+  // Function to update avatar URL.
 
   async function onSubmit(avatar) {
-    // event.preventDefault();
-
-    // const venueInfo = {
-    //   name: title,
-    //   description: description,
-    //   media: images,
-    //   price: parseInt(price),
-    //   maxGuests: parseInt(maxGuests),
-    //   rating: parseInt(rating),
-    //   meta: meta,
-    //   location: location,
-    // };
-    // const avatar = {
-    //   avatar: avatar,
-    // };
-    // console.log(venueInfo);
-    // console.log(images);
-
-    // const test = JSON.stringify(venueInfo);
-    // console.log(typeof test);
-
-    // const newVenueInfo = JSON.parse(test);
-    // console.log(typeof newVenueInfo);
-
-    // const errors = {
-    //   //   name: title.length < 1 ? "Name is required" : "",
-    //   //   description: description.length < 1 ? "A description is required" : "",
-    // };
-
-    // if (Object.values(errors).some((err) => err !== "")) {
-    //   setFormError(errors);
-    // } else {
-    //   alert("Thank you for creating a form!");
-
-    //   //   console.log(venueInfo);
-    // }
-
     try {
       const response = await fetch(avatarURL, {
         method: "PUT",
@@ -270,11 +123,8 @@ export default function Profile() {
       });
       const data = await response.json();
 
-      console.log(data, avatar);
-
       if (response.status === 200) {
         window.location.reload(true);
-        // navigate("/venue/" + `${id}`);
       }
       return data;
     } catch {
@@ -283,125 +133,112 @@ export default function Profile() {
     }
   }
 
+  // return data.
+
   return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.contentWrapper}>
-        <div className={styles.informationCard}>
-          <h1>PROFILE</h1>
-          <>
-            <div className={styles.avatarCard}>
-              <div className={styles.updateAvatar}>
-                <Link
-                  // to={"/updateavatar/" + `${authenticate.name}`}
-                  onClick={handleShow}
-                >
-                  <RiImageEditLine />
-                </Link>
+    <HelmetProvider>
+      <div className={styles.pageWrapper}>
+        <Helmet>
+          <title>Holidaze | {user.name}'s Profile</title>
+          <link
+            rel="icon"
+            type="image/png"
+            href="/public/favicon.ico"
+            sizes="16x16"
+          />
+        </Helmet>
+        <div className={styles.contentWrapper}>
+          <div className={styles.informationCard}>
+            <h1>PROFILE</h1>
+            <>
+              <div className={styles.avatarCard}>
+                <div className={styles.updateAvatar}>
+                  <Link onClick={handleShow}>
+                    <span className={styles.update}>update</span>
+                    <RiImageEditLine />
+                  </Link>
+                </div>
+                <img
+                  className={styles.avatar}
+                  src={user.avatar}
+                  alt={user.name}
+                />
               </div>
-              <img className={styles.avatar} src={user.avatar} />
-            </div>
-            <h2>{user.name}</h2>
+              <h2>{user.name}</h2>
+
+              <Modal
+                variant="dark"
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                className={styles.modalBg}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Update Avatar Image</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <form
+                    className={styles.form}
+                    id="avatar"
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
+                    <label className={styles.label} htmlFor="avatar">
+                      New Avatar Url:
+                    </label>
+                    <input
+                      className={styles.inputSize}
+                      type="url"
+                      name="avatar"
+                      placeholder="Please enter image url"
+                      {...register("avatar")}
+                    />
+                    <p>{errors.avatar?.message}</p>
+                    <div className={styles.avatarModalBtn}>
+                      <Button name={"Save"} type="submit" />
+                    </div>
+                  </form>
+                </Modal.Body>
+              </Modal>
+            </>
+
             <div>
-              {/* <p>
-              Please email with any queries at: <br /> {user.email}
-            </p> */}
-              {/* <p>
-              You're logged in as{" "}
-              {user.venueManager === true ? "Venue Manager" : "Customer"}
-            </p> */}
-            </div>
-
-            {/* <Button
-              name={"Launch static backdrop modal"}
-              onClick={handleShow}
-            /> */}
-
-            <Modal
-              variant="dark"
-              show={show}
-              onHide={handleClose}
-              backdrop="static"
-              keyboard={false}
-              className={styles.modalBg}
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Update Avatar Image</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <form
-                  className={styles.form}
-                  id="avatar"
-                  onSubmit={handleSubmit(onSubmit)}
-                >
-                  <label className={styles.label} htmlFor="avatar">
-                    New Avatar Url:
-                  </label>
-                  <input
-                    className={styles.inputSize}
-                    type="url"
-                    name="avatar"
-                    placeholder="Please enter image url"
-                    {...register("avatar")}
+              {user.venueManager === true ? (
+                <div className={styles.profileText}>
+                  <p>
+                    You're signed in as a Venue Manager <br />
+                    {/* View the venues you manage, or create a new venue! */}
+                  </p>
+                  <Button
+                    name={"My Venues"}
+                    onClick={() => handleOnClickMyVenues()}
                   />
-                  <p>{errors.avatar?.message}</p>
-                  <div className={styles.avatarModalBtn}>
-                    <Button name={"Save"} type="submit" />
-                  </div>
-                </form>
-              </Modal.Body>
-            </Modal>
-          </>
-
-          <div>
-            {user.venueManager === true ? (
-              <div className={styles.profileText}>
-                <p>
-                  Email: <br /> {user.email}
-                </p>
-                <p>
-                  You're signed in as a Venue Manager <br />
-                  {/* View the venues you manage, or create a new venue! */}
-                </p>
-                <Button
-                  name={"My Venues"}
-                  onClick={() => handleOnClickMyVenues()}
-                />
-                <Button
-                  name={"Create New"}
-                  onClick={() => handleOnClickCreateVenue()}
-                />
-                <Button
-                  name={"Upcoming Bookings"}
-                  onClick={() => handleOnClickMyBookings()}
-                />
-              </div>
-            ) : (
-              <div className={styles.profileText}>
-                <p>You're signed in as a Customer</p>
-                {/* <p>
-                  Want to see what upcoming amazingness you have to look forward
-                  to? Click the below button to view your upcoming bookings! Or
-                  maybe you wish to view other opportunities?
-                </p> */}
-                <Button
-                  name={"Upcoming Bookings"}
-                  onClick={() => handleOnClickMyBookings()}
-                />
-                <Button
-                  name={"Find a Venue"}
-                  onClick={() => handleOnClickAllVenues()}
-                />
-              </div>
-            )}
+                  <Button
+                    name={"Create New"}
+                    onClick={() => handleOnClickCreateVenue()}
+                  />
+                  <Button
+                    name={"Upcoming Bookings"}
+                    onClick={() => handleOnClickMyBookings()}
+                  />
+                </div>
+              ) : (
+                <div className={styles.profileText}>
+                  <p>You're signed in as a Customer</p>
+                  <Button
+                    name={"Upcoming Bookings"}
+                    onClick={() => handleOnClickMyBookings()}
+                  />
+                  <Button
+                    name={"Find a Venue"}
+                    onClick={() => handleOnClickAllVenues()}
+                  />
+                </div>
+              )}
+            </div>
           </div>
-
-          {/* <p>
-            {user._count.venues} Venues | {user._count.bookings} Bookings
-          </p> */}
         </div>
       </div>
-    </div>
+    </HelmetProvider>
   );
-
-  //});
 }
