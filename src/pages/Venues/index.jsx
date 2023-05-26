@@ -126,20 +126,31 @@ export default function Venues() {
                       </>
                     ) : (
                       <>
-                        <Carousel>
-                          {venue.media.map((image, index) => {
-                            return (
-                              <Carousel.Item key={index}>
-                                <img
-                                  className={styles.venueImage}
-                                  src={image}
-                                  alt={venue.name}
-                                  onError={mediaError}
-                                />
-                              </Carousel.Item>
-                            );
-                          })}
-                        </Carousel>
+                        <>
+                          {venue.media.length === 1 ? (
+                            <img
+                              className={styles.venueImage}
+                              src={venue.media}
+                              alt={venue.name}
+                              onError={mediaError}
+                            />
+                          ) : (
+                            <Carousel>
+                              {venue.media.map((image, index) => {
+                                return (
+                                  <Carousel.Item key={index}>
+                                    <img
+                                      className={styles.venueImage}
+                                      src={image}
+                                      alt={venue.name}
+                                      onError={mediaError}
+                                    />
+                                  </Carousel.Item>
+                                );
+                              })}
+                            </Carousel>
+                          )}
+                        </>
                       </>
                     )}
                   </div>

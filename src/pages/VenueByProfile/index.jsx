@@ -164,20 +164,29 @@ export default function Venues() {
                           </>
                         ) : (
                           <>
-                            <Carousel>
-                              {profilevenue.media.map((image, index) => {
-                                return (
-                                  <Carousel.Item key={index}>
-                                    <img
-                                      className={styles.venueImage}
-                                      src={image}
-                                      alt={profilevenue.name}
-                                      onError={mediaError}
-                                    />
-                                  </Carousel.Item>
-                                );
-                              })}
-                            </Carousel>
+                            {profilevenue.media.length === 1 ? (
+                              <img
+                                className={styles.venueImage}
+                                src={profilevenue.media}
+                                alt={profilevenue.name}
+                                onError={mediaError}
+                              />
+                            ) : (
+                              <Carousel>
+                                {profilevenue.media.map((image, index) => {
+                                  return (
+                                    <Carousel.Item key={index}>
+                                      <img
+                                        className={styles.venueImage}
+                                        src={image}
+                                        alt={profilevenue.name}
+                                        onError={mediaError}
+                                      />
+                                    </Carousel.Item>
+                                  );
+                                })}
+                              </Carousel>
+                            )}
                           </>
                         )}
                       </div>
