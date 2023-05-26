@@ -1,9 +1,19 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 import styles from "./home.module.css";
 
 export default function Home() {
+  // naviate to venue by button
+
+  const navigate = useNavigate();
+  const handleOnClickVenues = () => {
+    navigate("/venues");
+  };
+
+  // return data.
+
   return (
     <HelmetProvider>
       <div className={styles.pageWrapper}>
@@ -32,7 +42,11 @@ export default function Home() {
           </p>
           <p className={styles.allVenues}>
             Ready to travel again? {""}
-            <Link to="/venues">Browse all our venues</Link>
+            <br />
+            <Button
+              name={"Browse all our venues"}
+              onClick={() => handleOnClickVenues()}
+            />
           </p>
         </div>
       </div>
