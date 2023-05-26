@@ -6,14 +6,6 @@ export default function Header() {
   return (
     <header>
       <div className={styles.headerPlacement}>
-        {/* <div>
-          <img
-            className={styles.logoImage}
-            height="100vmin"
-            src={Logo}
-            alt="Holidaze-logo"
-          />
-        </div> */}
         <HeaderNav />
       </div>
     </header>
