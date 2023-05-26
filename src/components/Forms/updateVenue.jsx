@@ -19,8 +19,8 @@ export default function UpdateVenueFrom(props) {
     title: "",
     description: "",
     images: [""],
-    price: 0,
-    maxGuests: 0,
+    price: "",
+    maxGuests: "",
     rating: 0,
     meta: {
       wifi: false,
@@ -43,9 +43,9 @@ export default function UpdateVenueFrom(props) {
     title: "",
     description: "",
     images: [""],
-    price: 0,
-    maxGuests: 0,
-    rating: 0,
+    price: "",
+    maxGuests: "",
+    rating: "",
     meta: {
       wifi: false,
       parking: false,
@@ -147,6 +147,7 @@ export default function UpdateVenueFrom(props) {
           placeholder="Enter venue name"
           onChange={handleSpecialInputChange}
         />
+
         <label className={styles.label} htmlFor="description">
           Description: *
         </label>
@@ -160,6 +161,7 @@ export default function UpdateVenueFrom(props) {
           placeholder="Please enter a description of the venue"
           onChange={handleSpecialInputChange}
         />
+
         <label className={styles.label} htmlFor="images">
           Venue Images:
         </label>
@@ -189,6 +191,7 @@ export default function UpdateVenueFrom(props) {
           placeholder="Please enter price"
           onChange={handleSpecialInputChange}
         />
+
         <label className={styles.label} htmlFor="maxGuests">
           Max Amount of Guests: *
         </label>
@@ -201,6 +204,7 @@ export default function UpdateVenueFrom(props) {
           placeholder="Please enter guest amount"
           onChange={handleSpecialInputChange}
         />
+
         <label className={styles.label} htmlFor="rating">
           Venue Rating:
         </label>

@@ -83,6 +83,9 @@ export default function SignInForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <label className={styles.label} htmlFor="email">
+        Email: *
+      </label>
       <input
         className={styles.inputSize}
         type="email"
@@ -90,7 +93,10 @@ export default function SignInForm() {
         placeholder="Please enter your Email"
         {...register("email")}
       />
-      <p className={styles.errorMessage}>{errors.email?.message}</p>
+      <p className={styles.errorInput}>{errors.email?.message}</p>
+      <label className={styles.label} htmlFor="password">
+        Password: *
+      </label>
       <input
         className={styles.inputSize}
         type="password"
@@ -98,7 +104,7 @@ export default function SignInForm() {
         placeholder="Please enter a password"
         {...register("password")}
       />
-      <p className={styles.errorMessage}>{errors.password?.message}</p>
+      <p className={styles.errorInput}>{errors.password?.message}</p>
       <div className={styles.button}>
         <Button name={"Sign In"} type="submit" />
       </div>

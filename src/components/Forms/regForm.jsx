@@ -19,15 +19,15 @@ const URL = API_HOLIDAZE_URL + TOKEN_AUTH + action;
 const schema = yup.object({
   name: yup
     .string()
-    .min(1)
-    .max(20, "Your name cannot be more than 20 character")
+    .min(1, "Your name must be more than 1 character")
+    .max(20, "Your name cannot be more than 20 characters")
     .required("Please enter your first name"),
   email: yup
     .string()
     .email()
     .matches(
-      /^[\w\-.]+@(stud\.)?noroff\.no$/,
-      "Enter a valid stud.noroff.no or noroff.no email address"
+      /^[\w\-.]+@(stud\.)noroff\.no$/,
+      "Enter a valid stud.noroff.no email address"
     ),
   password: yup
     .string()
@@ -94,6 +94,9 @@ export default function RegForm() {
   return (
     <div>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <label className={styles.label} htmlFor="name">
+          Name: *
+        </label>
         <input
           className={styles.inputSize}
           type="text"
@@ -101,7 +104,10 @@ export default function RegForm() {
           placeholder="Enter your name"
           {...register("name")}
         />
-        <p>{errors.name?.message}</p>
+        <p className={styles.errorInput}>{errors.name?.message}</p>
+        <label className={styles.label} htmlFor="email">
+          Email: *
+        </label>
         <input
           className={styles.inputSize}
           type="email"
@@ -109,7 +115,10 @@ export default function RegForm() {
           placeholder="Please enter your Email"
           {...register("email")}
         />
-        <p>{errors.email?.message}</p>
+        <p className={styles.errorInput}>{errors.email?.message}</p>
+        <label className={styles.label} htmlFor="password">
+          Password: *
+        </label>
         <input
           className={styles.inputSize}
           type="password"
@@ -117,7 +126,10 @@ export default function RegForm() {
           placeholder="Please enter a password"
           {...register("password")}
         />
-        <p>{errors.password?.message}</p>
+        <p className={styles.errorInput}>{errors.password?.message}</p>
+        <label className={styles.label} htmlFor="avatar">
+          Avatar:
+        </label>
         <input
           className={styles.inputSize}
           type="url"
@@ -125,7 +137,7 @@ export default function RegForm() {
           placeholder="Please enter image url"
           {...register("avatar")}
         />
-        <p>{errors.avatar?.message}</p>
+        <p className={styles.errorInput}>{errors.avatar?.message}</p>
 
         <div>
           <p>Become a manager through Holidaze?</p>
