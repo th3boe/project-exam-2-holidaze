@@ -20,25 +20,9 @@ nav {
   padding: 15px;
 }
 
-/* .signInOut a {
-  padding-left: 25px;
-} */
-
 .header {
-  /* border-bottom: 1px solid black; */
-  /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507); */
-  /* background-color: #2b2b2b00; */
-  /* align-items: center; */
   width: 100%;
-  /* z-index: 1; */
 }
-
-/* .headerPlacement {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-} */
 
 .logoImage {
   display: flex;

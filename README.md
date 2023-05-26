@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c8158cc0-2279-40c8-b3b2-a8e6d75e4a3e/deploy-status)](https://app.netlify.com/sites/holidaze-by-boe/deploys)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -114,6 +114,6 @@ input:checked + .slider:before {
 
 .errorMessage {
   margin: 10px auto;
-  color: rgb(215, 7, 7);
+  color: #f7984b;
   font-weight: 500;
 }

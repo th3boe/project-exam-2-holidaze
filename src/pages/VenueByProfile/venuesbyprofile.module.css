@@ -14,7 +14,7 @@
   border: 0;
   padding: 0;
   margin: 0;
-  position: absolute !important;
+  position: absolute;
   height: 1px;
   width: 1px;
   overflow: hidden;
@@ -42,20 +42,6 @@
   font-size: 25px;
 }
 
-/* .card {
-  border: 1px solid black;
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
-  background-color: #2b2b2bb5;
-  color: white;
-  margin: 10px;
-  width: 300px;
-  filter: blur(0);
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-} */
-
 .card {
   border: 1px solid black;
   border-radius: 10px;
@@ -71,66 +57,15 @@
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-/* .card:hover {
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-shadow: 7px 7px 14px rgba(0, 0, 0, 0.507);
-  border-radius: 25px;
-  background-color: #2b2b2be4;
-  /* background-color: #32917eb5; */
-/* filter: blur(0.6px);
-} */
-
 a {
   text-decoration: none;
 }
-
-/* .cardTitle {
-  font-size: 18px;
-  border: 1px solid black;
-  background-color: #2b2b2bb5;
-  box-shadow: 7px 7px 14px rgba(0, 0, 0, 0.507);
-  padding: 8px;
-  margin: 15px;
-  position: absolute;
-  bottom: 60%;
-  /* left: 30%; 
-  width: 100%;
-} */
-
-/* .venueImage {
-  height: 270px;
-  width: 100%;
-  object-fit: cover;
-  transition: transform 0.2s;
-
-  /* border-bottom: 1px solid black; */
-/* border-radius: 15px 15px 0px 0px;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-} */
 
 .venueImage {
   height: 330px;
   width: 100%;
   object-fit: cover;
 }
-
-/* .venueImage:hover {
-  transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
-  transform: scale(1.1);
-  /* border-radius: 0px 0px 0px 0px;
-} */
-
-/* .cardText {
-  padding: 7px;
-  position: absolute;
-  bottom: 0px;
-  background-color: #2b2b2bb5;
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-  border-radius: 0px 10px 0px 0px;
-  box-shadow: 7px 7px 14px rgba(0, 0, 0, 0.507);
-  padding: 8px;
-} */
 
 .cardTitle {
   font-size: 25px;
@@ -140,7 +75,6 @@ a {
 .cardText {
   padding: 7px;
   position: absolute;
-  /* bottom: 0px; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -170,7 +104,7 @@ a {
   text-align: end;
 }
 
-/* error css */
+/* error and loader css */
 
 .loader {
   text-align: center;

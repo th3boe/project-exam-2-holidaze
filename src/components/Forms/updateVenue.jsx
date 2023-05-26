@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_HOLIDAZE_URL } from "../../constants/api";
-import useAxios from "../../hooks/useAxios";
 
 import AuthContext from "../../context/AuthContext";
 import Button from "../Button/";
@@ -10,8 +9,9 @@ import styles from "./form.module.css";
 // URL
 
 const action = "/venues";
-// const method = "POST";
 const URL = API_HOLIDAZE_URL + action;
+
+// Update function.
 
 export default function UpdateVenueFrom(props) {
   const [authenticate] = useContext(AuthContext);
@@ -38,27 +38,7 @@ export default function UpdateVenueFrom(props) {
       lng: 0,
     },
   });
-  //   const [title, setTitle] = useState("");
-  //   const [description, setDescription] = useState("");
-  //   const [images, setImages] = useState([""]);
-  //   const [price, setPrice] = useState(0);
-  //   const [maxGuests, setMaxGuests] = useState(0);
-  //   const [rating, setRating] = useState(0);
-  //   const [meta, setMeta] = useState({
-  //     wifi: false,
-  //     parking: false,
-  //     breakfast: false,
-  //     pets: false,
-  //   });
-  //   const [location, setLocation] = useState({
-  //     address: "Unknown",
-  //     city: "Unknown",
-  //     zip: "Unknown",
-  //     country: "Unknown",
-  //     continent: "Unknown",
-  //     lat: 0,
-  //     lng: 0,
-  //   });
+
   const [formError, setFormError] = useState({
     title: "",
     description: "",
@@ -82,9 +62,16 @@ export default function UpdateVenueFrom(props) {
       lng: 0,
     },
   });
-  const http = useAxios();
+
+  // ID to get specific venue information.
+
   let { id } = useParams();
+
+  // Navigate to venue when updated.
+
   const navigate = useNavigate();
+
+  // GET old data from the venue that is being updated.
 
   useEffect(() => {
     const response = fetch(URL + `/${id}`, {
@@ -98,43 +85,10 @@ export default function UpdateVenueFrom(props) {
       .then((data) => setVenue(data));
   }, [id]);
 
-  console.log(venue);
+  // Update (PUT) function.
 
   async function handleFormSubmit(event) {
     event.preventDefault();
-
-    // const venueInfo = {
-    //   name: title,
-    //   description: description,
-    //   media: images,
-    //   price: parseInt(price),
-    //   maxGuests: parseInt(maxGuests),
-    //   rating: parseInt(rating),
-    //   meta: meta,
-    //   location: location,
-    // };
-
-    // console.log(venueInfo);
-    // console.log(images);
-
-    // const test = JSON.stringify(venueInfo);
-    // console.log(typeof test);
-
-    // const newVenueInfo = JSON.parse(test);
-    // console.log(typeof newVenueInfo);
-
-    // const errors = {
-    //   //   name: title.length < 1 ? "Name is required" : "",
-    //   //   description: description.length < 1 ? "A description is required" : "",
-    // };
-
-    // if (Object.values(errors).some((err) => err !== "")) {
-    //   setFormError(errors);
-    // } else {
-    //   alert("Thank you for creating a form!");
-
-    //   //   console.log(venueInfo);
-    // }
 
     try {
       const response = await fetch(URL + `/${id}`, {
@@ -147,8 +101,6 @@ export default function UpdateVenueFrom(props) {
       });
       const data = await response.json();
 
-      console.log(data, venue);
-
       if (response.status === 200) {
         navigate("/venue/" + `${id}`);
       }
@@ -158,6 +110,8 @@ export default function UpdateVenueFrom(props) {
       console.log(formError);
     }
   }
+
+  // handle input - gathering old data.
 
   const handleSpecialInputChange = (event) => {
     const { type, name, checked, value } = event.target;
@@ -171,24 +125,12 @@ export default function UpdateVenueFrom(props) {
           [name]: checked,
         },
       }));
-    }
-    // else if (value === venue.location.) {
-    //   setVenue((prevVenue) => ({
-    //     ...prevVenue,
-    //     location: {
-    //       ...prevVenue.location,
-    //       [name]: value,
-    //     },
-    //   }));
-    // }
-    else {
+    } else {
       setVenue((prevVenue) => ({ ...prevVenue, [name]: value }));
     }
   };
 
-  // load old information
-  //   const oldTitle = venue.name;
-  //   const oldDescription = venue.description;
+  // return form data.
 
   return (
     <div>
@@ -204,7 +146,6 @@ export default function UpdateVenueFrom(props) {
           value={venue.name || ""}
           placeholder="Enter venue name"
           onChange={handleSpecialInputChange}
-          //   onChange={(e) => setTitle(e.target.value)}
         />
         <label className={styles.label} htmlFor="description">
           Description: *
@@ -218,7 +159,6 @@ export default function UpdateVenueFrom(props) {
           value={venue.description || ""}
           placeholder="Please enter a description of the venue"
           onChange={handleSpecialInputChange}
-          //   onChange={(e) => setDescription(e.target.value)}
         />
         <label className={styles.label} htmlFor="images">
           Venue Images:
@@ -230,28 +170,13 @@ export default function UpdateVenueFrom(props) {
           name="images"
           value={venue.media || [""]}
           placeholder="Please enter one or more image urls"
-          //   onChange={handleSpecialInputChange}
           onChange={(e) =>
             setVenue((prevVenue) => ({
               ...prevVenue,
               media: e.target.value.split(","),
             }))
           }
-          //   onChange={(e) => setImages(e.target.value.split(","))}
         />
-        {/* <label className={styles.label} htmlFor="media">
-          Venue Images:
-        </label>
-        <input
-          className={styles.inputSize}
-          type="text"
-          id="media"
-          name="media"
-          value={images}
-          placeholder="Please enter one or more image urls"
-          //   onChange={handleInputChange}
-          onChange={(e) => setImages(e.target.value)}
-        /> */}
         <label className={styles.label} htmlFor="price">
           Price per night?: *
         </label>
@@ -263,7 +188,6 @@ export default function UpdateVenueFrom(props) {
           value={venue.price || ""}
           placeholder="Please enter price"
           onChange={handleSpecialInputChange}
-          //   onChange={(e) => setPrice(e.target.value)}
         />
         <label className={styles.label} htmlFor="maxGuests">
           Max Amount of Guests: *
@@ -276,7 +200,6 @@ export default function UpdateVenueFrom(props) {
           value={venue.maxGuests || ""}
           placeholder="Please enter guest amount"
           onChange={handleSpecialInputChange}
-          //   onChange={(e) => setMaxGuests(e.target.value)}
         />
         <label className={styles.label} htmlFor="rating">
           Venue Rating:
@@ -291,7 +214,6 @@ export default function UpdateVenueFrom(props) {
           max="5"
           placeholder="Please rate venue"
           onChange={handleSpecialInputChange}
-          //   onChange={(e) => setRating(e.target.value)}
         />
 
         <p>Details:</p>
@@ -304,7 +226,6 @@ export default function UpdateVenueFrom(props) {
                 type="checkbox"
                 name="wifi"
                 checked={venue.meta.wifi}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -317,7 +238,6 @@ export default function UpdateVenueFrom(props) {
                 type="checkbox"
                 name="parking"
                 checked={venue.meta.parking}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -333,7 +253,6 @@ export default function UpdateVenueFrom(props) {
                 type="checkbox"
                 name="breakfast"
                 checked={venue.meta.breakfast}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -346,7 +265,6 @@ export default function UpdateVenueFrom(props) {
                 type="checkbox"
                 name="pets"
                 checked={venue.meta.pets}
-                // onChange={handleInputChange}
                 onChange={handleSpecialInputChange}
               />{" "}
               <span className={styles.slider}></span>
@@ -367,7 +285,6 @@ export default function UpdateVenueFrom(props) {
             name="address"
             value={venue.location.address || ""}
             placeholder="Please enter address"
-            // onChange={(e) => setRating(e.target.value)}
             onChange={(e) =>
               setVenue((prevVenue) => ({
                 ...prevVenue,
@@ -377,7 +294,6 @@ export default function UpdateVenueFrom(props) {
                 },
               }))
             }
-            // onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="city">
             City:
@@ -389,7 +305,6 @@ export default function UpdateVenueFrom(props) {
             name="city"
             value={venue.location.city || ""}
             placeholder="Please enter city"
-            // onChange={handleInputChange}
             onChange={(e) =>
               setVenue((prevVenue) => ({
                 ...prevVenue,
@@ -399,7 +314,6 @@ export default function UpdateVenueFrom(props) {
                 },
               }))
             }
-            // onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="zip">
             Zip:
@@ -420,8 +334,6 @@ export default function UpdateVenueFrom(props) {
                 },
               }))
             }
-            // onChange={handleInputChange}
-            // onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="country">
             Country:
@@ -433,7 +345,6 @@ export default function UpdateVenueFrom(props) {
             name="country"
             value={venue.location.country || ""}
             placeholder="Please enter country"
-            // onChange={handleInputChange}
             onChange={(e) =>
               setVenue((prevVenue) => ({
                 ...prevVenue,
@@ -443,7 +354,6 @@ export default function UpdateVenueFrom(props) {
                 },
               }))
             }
-            // onChange={handleSpecialInputChange}
           />
           <label className={styles.label} htmlFor="continent">
             Continent:
@@ -455,8 +365,6 @@ export default function UpdateVenueFrom(props) {
             name="continent"
             value={venue.location.continent || ""}
             placeholder="Please enter continent"
-            // onChange={handleInputChange}
-            // onChange={handleSpecialInputChange}
             onChange={(e) =>
               setVenue((prevVenue) => ({
                 ...prevVenue,
@@ -477,8 +385,6 @@ export default function UpdateVenueFrom(props) {
             name="lat"
             value={venue.location.lat || ""}
             placeholder="Please enter lat"
-            // onChange={handleInputChange}
-            // onChange={handleSpecialInputChange}
             onChange={(e) =>
               setVenue((prevVenue) => ({
                 ...prevVenue,
@@ -508,8 +414,6 @@ export default function UpdateVenueFrom(props) {
                 },
               }))
             }
-            // onChange={handleInputChange}
-            // onChange={handleSpecialInputChange}
           />
         </div>
         <div className={styles.button}>

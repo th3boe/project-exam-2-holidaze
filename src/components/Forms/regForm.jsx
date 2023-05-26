@@ -48,9 +48,10 @@ export default function RegForm() {
     resolver: yupResolver(schema),
   });
 
-  //   const [manager, setManager] = useState(false);
   const [submitForm, setSubmitForm] = useState(false);
   const [formError, setFormError] = useState(false);
+
+  // Navigate to sign in when registered ok.
 
   const navigate = useNavigate();
 
@@ -71,12 +72,10 @@ export default function RegForm() {
       if (response.status === 201) {
         setSubmitForm(true);
         setFormError(false);
-        console.log(profile, result, "YOU'RE GOLDEN!");
         navigate("/signin");
       }
 
       if (response.status !== 201) {
-        console.log(profile, result, "NOT THIS TIME, SORRY");
         setFormError(true);
         setSubmitForm(false);
         alert(
@@ -89,6 +88,8 @@ export default function RegForm() {
       console.log(error);
     }
   }
+
+  // the return data.
 
   return (
     <div>
@@ -132,7 +133,6 @@ export default function RegForm() {
             <input
               type="checkbox"
               name="venueManager"
-              //   onChange={(e) => setManager({ manager: !manager })}
               onChange={(check) => !check}
               {...register("venueManager")}
             />{" "}

@@ -1,7 +1,6 @@
 .pageWrapper {
   text-align: center;
   padding: 40px 0;
-  /* color: white; */
 }
 
 .contentWrapper {
@@ -15,7 +14,6 @@
   border: 1px solid black;
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
-  /* background-color: #2b2b2bb5; */
   backdrop-filter: blur(8px);
   padding: 10px;
   margin: 10px auto;
@@ -37,10 +35,9 @@
   margin: 10px;
 }
 
-/* .avatar:hover {
-  border: 1px dashed #e7a600;
-  transition: border 0.2s;
-} */
+.update {
+  visibility: hidden;
+}
 
 .updateAvatar {
   font-size: 20px;
@@ -65,7 +62,6 @@
 .form {
   width: 100%;
   margin: auto;
-  /* padding: 10px; */
   display: flex;
   flex-direction: column;
 }
