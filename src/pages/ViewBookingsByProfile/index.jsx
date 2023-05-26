@@ -41,7 +41,6 @@ export default function MyBookings() {
         setLoader(true);
 
         const response = await http.get(URL);
-        console.log(response.data);
 
         setBookings(response.data);
         setLoader(false);
