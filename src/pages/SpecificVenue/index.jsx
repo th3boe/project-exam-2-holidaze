@@ -40,9 +40,9 @@ export default function SpecificVenue() {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
   const [formError, setFormError] = useState({
-    guests: 1,
-    startDate: 0,
-    endDate: 0,
+    guests: "",
+    startDate: "",
+    endDate: "",
   });
   const [error, setError] = useState(false);
   const [addedBooking, setAddedBooking] = useState(false);
@@ -118,6 +118,8 @@ export default function SpecificVenue() {
     );
   }
 
+  // function to fill in the dates between start and end date of exclude dates.
+
   function alreadyBooked() {
     return venue.bookings.map((booking) => ({
       start: new Date(booking.dateFrom) - 86400000,
@@ -137,18 +139,25 @@ export default function SpecificVenue() {
       venueId: `${id}`,
     };
 
-    setDateRange("");
-    setGuests("");
-
-    console.log(bookingInfo);
+    // error handling for inputs.
 
     const errors = {
-      guests: guests.length > 1 ? "Number of guests must be more than 1" : "",
+      guests:
+        guests >= 1 && guests > venue.maxGuests
+          ? "Number of guests must be 1 or more, but cannot be more than the venue allows"
+          : guests < 1
+          ? "You must add an amount of guests over 1!"
+          : "",
+      dateRange:
+        !startDate && !endDate
+          ? "Your booking must have a start and end date"
+          : "",
     };
 
     if (Object.values(errors).some((err) => err !== "")) {
       setFormError(errors);
     } else {
+      console.log(bookingInfo);
     }
 
     try {
@@ -162,13 +171,14 @@ export default function SpecificVenue() {
       });
       const data = await response.json();
 
-      console.log(data, bookingInfo);
       if (response.status === 201) {
+        setFormError(false);
         setAddedBooking(true);
+        setDateRange("");
+        setGuests("");
       }
     } catch {
       alert("Booking failed..");
-      console.log(formError);
     }
   }
 
@@ -214,7 +224,6 @@ export default function SpecificVenue() {
               <p className={styles.detailSpecific}>
                 <IoMdPricetags /> {venue.price} NOK per night
               </p>
-              <p>|</p>
               <p className={styles.detailSpecific}>
                 <BsFillPersonFill /> {""}
                 {venue.maxGuests > 1 ? (
@@ -223,7 +232,6 @@ export default function SpecificVenue() {
                   <>{venue.maxGuests} person</>
                 )}
               </p>
-              <p>|</p>
               <p className={styles.detailSpecific}>
                 <BsStarFill /> ({venue.rating})
               </p>
@@ -234,42 +242,49 @@ export default function SpecificVenue() {
                   <img
                     className={styles.carouselImage}
                     src={PlaceholderImage}
+                    alt="placeholder image venue"
                     onError={mediaError}
                   />
                 </>
               ) : (
                 <>
-                  <Carousel>
-                    {venue.media.map((image, index) => {
-                      return (
-                        <Carousel.Item key={index}>
-                          <img
-                            className={styles.carouselImage}
-                            src={image}
-                            alt={venue.name}
-                            onError={mediaError}
-                          />
-                        </Carousel.Item>
-                      );
-                    })}
-                  </Carousel>
+                  {venue.media.length === 1 ? (
+                    <img
+                      className={styles.carouselImage}
+                      src={venue.media}
+                      alt={venue.name}
+                      onError={mediaError}
+                    />
+                  ) : (
+                    <Carousel>
+                      {venue.media.map((image, index) => {
+                        return (
+                          <Carousel.Item key={index}>
+                            <img
+                              className={styles.carouselImage}
+                              src={image}
+                              alt={venue.name}
+                              onError={mediaError}
+                            />
+                          </Carousel.Item>
+                        );
+                      })}
+                    </Carousel>
+                  )}
                 </>
               )}
             </div>
             <h2 className={styles.detailsTitle}>DETAILS</h2>
             <div className={styles.details}>
               <p>{venue.meta.wifi === true ? "WiFi Included" : "No WiFi"}</p>
-              <p>|</p>
               <p>
                 {venue.meta.parking === true ? "Free Parking" : "No Parking"}
               </p>
-              <p>|</p>
               <p>
                 {venue.meta.breakfast === true
                   ? "Breakfast Included"
                   : "No Breakfast"}
               </p>
-              <p>|</p>
               <p>
                 {venue.meta.pets === true ? "Pets Allowed" : "No Pets Allowed"}
               </p>
@@ -292,6 +307,7 @@ export default function SpecificVenue() {
                           <h4>calender</h4>
                           <div className={styles.dateCard}>
                             <DatePicker
+                              minDate={new Date()}
                               excludeDateIntervals={alreadyBooked()}
                               selectsRange
                               selectsDisabledDaysInRange
@@ -360,6 +376,11 @@ export default function SpecificVenue() {
                               placeholder="Please enter guest amount"
                               onChange={(e) => setGuests(e.target.value)}
                             />
+                            {formError.guests && (
+                              <p className={styles.errorInput}>
+                                {formError.guests}
+                              </p>
+                            )}
 
                             <label className={styles.label} htmlFor="calender">
                               Pick wished dates for your stay:
@@ -368,6 +389,7 @@ export default function SpecificVenue() {
                               className={styles.inputSize}
                               placeholderText="select wished travel dates"
                               id="calender"
+                              minDate={new Date()}
                               excludeDateIntervals={alreadyBooked()}
                               selectsRange={true}
                               startDate={startDate}
@@ -377,6 +399,12 @@ export default function SpecificVenue() {
                               }}
                               withPortal
                             />
+                            {formError.dateRange && (
+                              <p className={styles.errorInput}>
+                                {formError.dateRange}
+                              </p>
+                            )}
+
                             <div className={styles.button}>
                               <Button name={"Book Now"} type="submit" />
                             </div>

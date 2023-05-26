@@ -112,8 +112,8 @@ input:checked + .slider:before {
   margin: 30px;
 }
 
-.errorMessage {
-  margin: 10px auto;
+.errorInput {
+  margin-bottom: 10px auto;
   color: #f7984b;
   font-weight: 500;
 }

@@ -11,9 +11,14 @@ import styles from "./nav.module.css";
 export default function HeaderNav() {
   const [authenticate, setAuthenticate] = useContext(AuthContext);
 
+  // sign out functionality
+
   const signout = () => {
     setAuthenticate(null);
   };
+
+  // return data.
+
   return (
     <Navbar
       collapseOnSelect
@@ -22,7 +27,7 @@ export default function HeaderNav() {
       className={styles.header}
     >
       <Container className={styles.headerPlacement}>
-        <Navbar.Brand to="/">
+        <Navbar.Brand href="/">
           <img
             className={styles.logoImage}
             height="100vmin"

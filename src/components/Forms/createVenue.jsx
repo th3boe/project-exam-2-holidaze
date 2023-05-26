@@ -41,7 +41,7 @@ export default function CreateNewVenue() {
     images: [""],
     price: "",
     maxGuests: "",
-    rating: 0,
+    rating: "",
     meta: {
       wifi: false,
       parking: false,
@@ -84,9 +84,12 @@ export default function CreateNewVenue() {
     const errors = {
       name: title.length < 1 ? "Name is required" : "",
       description: description.length < 1 ? "A description is required" : "",
-      price: price < 0 ? "Price is required" : "",
+      price: price <= 0 ? "Price is required" : "",
       maxGuests:
-        maxGuests < 1 ? "A venue must accommodate at least one guest" : "",
+        maxGuests < 1 || maxGuests > 100
+          ? "A venue must accommodate at least one guest and less than 100"
+          : "",
+      rating: rating < 0 || rating > 5 ? "rating has to be between 0-5" : "",
     };
 
     if (Object.values(errors).some((err) => err !== "")) {
@@ -150,7 +153,7 @@ export default function CreateNewVenue() {
           onChange={(e) => setTitle(e.target.value)}
         />
         {formError.name && (
-          <p className={styles.errorMessage}>{formError.name}</p>
+          <p className={styles.errorInput}>{formError.name}</p>
         )}
 
         <label className={styles.label} htmlFor="description">
@@ -167,7 +170,7 @@ export default function CreateNewVenue() {
           onChange={(e) => setDescription(e.target.value)}
         />
         {formError.description && (
-          <p className={styles.errorMessage}>{formError.description}</p>
+          <p className={styles.errorInput}>{formError.description}</p>
         )}
 
         <label className={styles.label} htmlFor="images">
@@ -196,7 +199,7 @@ export default function CreateNewVenue() {
           onChange={(e) => setPrice(e.target.value)}
         />
         {formError.price && (
-          <p className={styles.errorMessage}>{formError.price}</p>
+          <p className={styles.errorInput}>{formError.price}</p>
         )}
 
         <label className={styles.label} htmlFor="maxGuests">
@@ -212,7 +215,7 @@ export default function CreateNewVenue() {
           onChange={(e) => setMaxGuests(e.target.value)}
         />
         {formError.maxGuests && (
-          <p className={styles.errorMessage}>{formError.maxGuests}</p>
+          <p className={styles.errorInput}>{formError.maxGuests}</p>
         )}
 
         <label className={styles.label} htmlFor="rating">
@@ -224,11 +227,13 @@ export default function CreateNewVenue() {
           id="rating"
           name="rating"
           value={rating}
-          min="0"
-          max="5"
+          // min="0"
           placeholder="Please rate venue"
           onChange={(e) => setRating(e.target.value)}
         />
+        {formError.rating && (
+          <p className={styles.errorInput}>{formError.rating}</p>
+        )}
 
         <p>Details:</p>
 

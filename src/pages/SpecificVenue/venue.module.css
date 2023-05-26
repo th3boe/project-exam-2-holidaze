@@ -69,7 +69,7 @@
 
 .details {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 10px;
   margin: 10px;
 }
@@ -147,6 +147,12 @@ h4 {
   border-radius: 8px;
 }
 
+.errorInput {
+  margin-bottom: 10px auto;
+  color: #f7984b;
+  font-weight: 500;
+}
+
 .addedSuccess {
   background-color: #579b57;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
@@ -165,5 +171,13 @@ h4 {
   }
   to {
     opacity: 0;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  .details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

@@ -61,6 +61,10 @@ export default function Profile() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // placeholder image for avatar
+
+  const placeholder = "https://picsum.photos/200";
+
   // URL
 
   const action = "/profiles";
@@ -158,11 +162,24 @@ export default function Profile() {
                     <RiImageEditLine />
                   </Link>
                 </div>
-                <img
-                  className={styles.avatar}
-                  src={user.avatar}
-                  alt={user.name}
-                />
+                {user.avatar < 1 ? (
+                  <>
+                    <p>
+                      No avatar? how rude! <br /> We gave you one.
+                    </p>
+                    <img
+                      className={styles.avatar}
+                      src={placeholder}
+                      alt={user.name}
+                    />
+                  </>
+                ) : (
+                  <img
+                    className={styles.avatar}
+                    src={user.avatar}
+                    alt={user.name}
+                  />
+                )}
               </div>
               <h2>{user.name}</h2>
 
@@ -205,10 +222,7 @@ export default function Profile() {
             <div>
               {user.venueManager === true ? (
                 <div className={styles.profileText}>
-                  <p>
-                    You're signed in as a Venue Manager <br />
-                    {/* View the venues you manage, or create a new venue! */}
-                  </p>
+                  <p>You're signed in as a Venue Manager</p>
                   <Button
                     name={"My Venues"}
                     onClick={() => handleOnClickMyVenues()}
