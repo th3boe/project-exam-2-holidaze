@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import { BsPersonFill } from "react-icons/bs";
-// import PlaceholderImage from "../../images/placeholder.jpg";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./venues.module.css";
@@ -22,24 +21,16 @@ export default function Venues() {
   const [venues, setVenues] = useState([]);
   const [loader, setLoader] = useState(false);
   const [upsError, setUpsError] = useState(false);
-  //   const [mediaError, setMediaError] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  //   const navigate = useNavigate();
-  //   const handleOnClickVenue = (id) => {
-  //     navigate("venue/" + id);
-  //   };
+  // error handling for images.
 
   const placeholder = "https://picsum.photos/id/80/200";
-  // const placeholder = { PlaceholderImage };
-  // const placeholder = "%PUBLIC_URL%/../../../../public/404.jpg";
   const mediaError = (e) => {
     e.target.src = placeholder;
   };
 
-  console.log(placeholder);
-
-  //   console.log({ placeholder });
+  // GET function for venues.
 
   useEffect(() => {
     async function getVenues() {
@@ -81,100 +72,95 @@ export default function Venues() {
     );
   }
 
-  // const image =
-  //   venues.media === undefined ? (
-  //     <img
-  //       className={styles.venueImage}
-  //       src={placeholderImage}
-  //       onError={mediaError}
-  //     />
-  //   ) : (
-  //     <img
-  //       className={styles.venueImage}
-  //       src={image.media}
-  //       alt="yes"
-  //       onError={mediaError}
-  //     />
-  //   );
-  // console.log(image);
-
-  // Venues content!
+  // return data.
 
   return (
-    <div>
-      <div className={styles.visuallyHidden}>
-        <h1>Venues!</h1>
-        <p>Check out all the amazing venues.</p>
-      </div>
-      <div className={styles.searchPlacement}>
-        <form>
-          <label
-            className={styles.labelSearch}
-            htmlFor="search"
-            alt="search-icon"
-          >
-            <span className={styles.visuallyHidden}>Search Label</span>
-          </label>
-          <input
-            id="search"
-            type="search"
-            placeholder="Search for possible venues.. "
-            className={styles.searchSize}
-            onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
-          ></input>
-        </form>
-      </div>
-      <div className={styles.cardContainer}>
-        {venues
-          .filter((venue) => venue.name.toLowerCase().includes(searchValue))
-          .map((venue) => (
-            <div key={venue.id}>
-              <div className={styles.card}>
-                <div>
-                  {venue.media == 0 ? (
-                    <>
-                      <img
-                        className={styles.venueImage}
-                        src={PlaceholderImage}
-                        onError={mediaError}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Carousel>
-                        {venue.media.map((image, index) => {
-                          return (
-                            <Carousel.Item key={index}>
-                              <img
-                                className={styles.venueImage}
-                                src={image}
-                                alt={image.name}
-                                onError={mediaError}
-                              />
-                            </Carousel.Item>
-                          );
-                        })}
-                      </Carousel>
-                    </>
-                  )}
-                </div>
-                <Link to={`/venue/${venue.id}`}>
-                  <div className={styles.cardText}>
-                    <h2 className={styles.cardTitle}>{venue.name}</h2>
-                    <p>
-                      <BsPersonFill /> {venue.maxGuests}
-                    </p>
-                    <span className={styles.price}>
-                      <p>
-                        NOK {venue.price} <br /> per night
-                      </p>
-                    </span>
+    <HelmetProvider>
+      <div>
+        <Helmet>
+          <title>Holidaze | Venues</title>
+          <link
+            rel="icon"
+            type="image/png"
+            href="/public/favicon.ico"
+            sizes="16x16"
+          />
+        </Helmet>
+        <div className={styles.visuallyHidden}>
+          <h1>Venues!</h1>
+          <p>Check out all the amazing venues.</p>
+        </div>
+        <div className={styles.searchPlacement}>
+          <form>
+            <label
+              className={styles.labelSearch}
+              htmlFor="search"
+              alt="search-icon"
+            >
+              <span className={styles.visuallyHidden}>Search Label</span>
+            </label>
+            <input
+              id="search"
+              type="search"
+              placeholder="Search for possible venues.. "
+              className={styles.searchSize}
+              onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
+            ></input>
+          </form>
+        </div>
+        <div className={styles.cardContainer}>
+          {venues
+            .filter((venue) => venue.name.toLowerCase().includes(searchValue))
+            .map((venue) => (
+              <div key={venue.id}>
+                <div className={styles.card}>
+                  <div>
+                    {venue.media == 0 ? (
+                      <>
+                        <img
+                          className={styles.venueImage}
+                          src={PlaceholderImage}
+                          alt="placeholder image"
+                          onError={mediaError}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Carousel>
+                          {venue.media.map((image, index) => {
+                            return (
+                              <Carousel.Item key={index}>
+                                <img
+                                  className={styles.venueImage}
+                                  src={image}
+                                  alt={venue.name}
+                                  onError={mediaError}
+                                />
+                              </Carousel.Item>
+                            );
+                          })}
+                        </Carousel>
+                      </>
+                    )}
                   </div>
-                </Link>
+                  <Link to={`/venue/${venue.id}`}>
+                    <div className={styles.cardText}>
+                      <h2 className={styles.cardTitle}>{venue.name}</h2>
+                      <p>
+                        <BsPersonFill /> {venue.maxGuests}
+                      </p>
+                      <span className={styles.price}>
+                        <p>
+                          NOK {venue.price} <br /> per night
+                        </p>
+                      </span>
+                    </div>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
-    </div>
+    </HelmetProvider>
   );
 }
