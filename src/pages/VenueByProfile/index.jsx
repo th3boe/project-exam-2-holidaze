@@ -5,6 +5,7 @@ import { API_HOLIDAZE_URL } from "../../constants/api";
 import AuthContext from "../../context/AuthContext";
 import useAxios from "../../hooks/useAxios";
 import { BsPersonFill } from "react-icons/bs";
+import { BiSearchAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./venuesbyprofile.module.css";
@@ -107,6 +108,25 @@ export default function Venues() {
           />
         </Helmet>
         <div className={styles.topOfPage}>
+          <div className={styles.searchPlacement}>
+            <form>
+              <label
+                className={styles.labelSearch}
+                htmlFor="search"
+                alt="search-icon"
+              >
+                <BiSearchAlt />
+                <span className={styles.visuallyHidden}>Search Label</span>
+              </label>
+              <input
+                id="search"
+                type="search"
+                placeholder="Search for possible venues.. "
+                className={styles.searchSize}
+                onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
+              ></input>
+            </form>
+          </div>
           <div className={styles.title}>
             <h1>All {authenticate.name}'s Venues</h1>
           </div>
@@ -120,24 +140,6 @@ export default function Venues() {
               onClick={() => handleOnClickProfile()}
             />
             <Button name={"All Venues"} onClick={() => handleOnClickVenues()} />
-          </div>
-          <div className={styles.searchPlacement}>
-            <form>
-              <label
-                className={styles.labelSearch}
-                htmlFor="search"
-                alt="search-icon"
-              >
-                <span className={styles.visuallyHidden}>Search Label</span>
-              </label>
-              <input
-                id="search"
-                type="search"
-                placeholder="Search for possible venues.. "
-                className={styles.searchSize}
-                onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
-              ></input>
-            </form>
           </div>
         </div>
         <div className={styles.cardContainer}>

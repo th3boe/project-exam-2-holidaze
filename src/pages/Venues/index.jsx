@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import { BsPersonFill } from "react-icons/bs";
+import { BiSearchAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import styles from "./venues.module.css";
@@ -97,6 +98,7 @@ export default function Venues() {
               htmlFor="search"
               alt="search-icon"
             >
+              <BiSearchAlt />
               <span className={styles.visuallyHidden}>Search Label</span>
             </label>
             <input

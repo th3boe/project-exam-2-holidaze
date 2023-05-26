@@ -32,6 +32,7 @@
 .searchSize {
   width: 70%;
   padding: 8px;
+  padding-left: 30px;
   border: 1px solid #000000;
   border-radius: 30px;
   font-size: 15px;
@@ -40,6 +41,8 @@
 .labelSearch {
   margin: 5px;
   font-size: 25px;
+  position: absolute;
+  top: 192px;
 }
 
 .card {
