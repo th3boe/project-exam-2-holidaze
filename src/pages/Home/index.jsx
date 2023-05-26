@@ -22,7 +22,7 @@ export default function Home() {
           <link
             rel="icon"
             type="image/png"
-            href="../../images/logo-mobile.png"
+            href="%PUBLIC_URL%/logo192.png"
             sizes="16x16"
           />
         </Helmet>
