@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { API_HOLIDAZE_URL } from "../../constants/api";
 import AuthContext from "../../context/AuthContext";
@@ -29,9 +30,13 @@ export default function Venues() {
   const [authenticate] = useContext(AuthContext);
   const http = useAxios();
 
+  // Error handling broken image.
+
   const mediaError = (e) => {
     e.target.src = PlaceholderImage;
   };
+
+  // Navigation used for buttons.
 
   const navigate = useNavigate();
   const handleOnClickCreateVenue = () => {
@@ -43,6 +48,8 @@ export default function Venues() {
   const handleOnClickVenues = () => {
     navigate("/venues");
   };
+
+  // GET venues for specific profile.
 
   useEffect(() => {
     async function getProfileVenues() {
@@ -85,105 +92,117 @@ export default function Venues() {
     );
   }
 
+  // return data.
+
   return (
-    <div>
-      <div className={styles.topOfPage}>
-        <div className={styles.title}>
-          <h1>All {authenticate.name}'s Venues</h1>
-        </div>
-        <div>
-          <Button
-            name={"Create New"}
-            onClick={() => handleOnClickCreateVenue()}
+    <HelmetProvider>
+      <div>
+        <Helmet>
+          <title>Holidaze | Venues by {authenticate.name}</title>
+          <link
+            rel="icon"
+            type="image/png"
+            href="/public/favicon.ico"
+            sizes="16x16"
           />
-          <Button
-            name={"Return to Profile"}
-            onClick={() => handleOnClickProfile()}
-          />
-          <Button name={"All Venues"} onClick={() => handleOnClickVenues()} />
+        </Helmet>
+        <div className={styles.topOfPage}>
+          <div className={styles.title}>
+            <h1>All {authenticate.name}'s Venues</h1>
+          </div>
+          <div>
+            <Button
+              name={"Create New"}
+              onClick={() => handleOnClickCreateVenue()}
+            />
+            <Button
+              name={"Return to Profile"}
+              onClick={() => handleOnClickProfile()}
+            />
+            <Button name={"All Venues"} onClick={() => handleOnClickVenues()} />
+          </div>
+          <div className={styles.searchPlacement}>
+            <form>
+              <label
+                className={styles.labelSearch}
+                htmlFor="search"
+                alt="search-icon"
+              >
+                <span className={styles.visuallyHidden}>Search Label</span>
+              </label>
+              <input
+                id="search"
+                type="search"
+                placeholder="Search for possible venues.. "
+                className={styles.searchSize}
+                onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
+              ></input>
+            </form>
+          </div>
         </div>
-        <div className={styles.searchPlacement}>
-          <form>
-            <label
-              className={styles.labelSearch}
-              htmlFor="search"
-              alt="search-icon"
-            >
-              <span className={styles.visuallyHidden}>Search Label</span>
-            </label>
-            <input
-              id="search"
-              type="search"
-              placeholder="Search for possible venues.. "
-              className={styles.searchSize}
-              onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
-            ></input>
-          </form>
-        </div>
-      </div>
-      <div className={styles.cardContainer}>
-        {profileVenues.length === 0 ? (
-          <p>You currently have venues to manage!</p>
-        ) : (
-          <>
-            {profileVenues
-              .filter((profilevenue) =>
-                profilevenue.name.toLowerCase().includes(searchValue)
-              )
-              .map((profilevenue) => (
-                <div key={profilevenue.id}>
-                  <div className={styles.card}>
-                    <div>
-                      {profilevenue.media == 0 ? (
-                        <>
-                          <img
-                            className={styles.venueImage}
-                            src={PlaceholderImage}
-                            onError={mediaError}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <Carousel>
-                            {profilevenue.media.map((image, index) => {
-                              return (
-                                <Carousel.Item key={index}>
-                                  <img
-                                    className={styles.venueImage}
-                                    src={image}
-                                    onError={mediaError}
-                                  />
-                                </Carousel.Item>
-                              );
-                            })}
-                          </Carousel>
-                        </>
-                      )}
-                    </div>
-                    {/* <div className={styles.cardTitle}>
-                        <p>{profilevenue.name}</p>
-                      </div> */}
-                    <Link to={`/venue/${profilevenue.id}`}>
-                      <div className={styles.cardText}>
-                        <h2 className={styles.cardTitle}>
-                          {profilevenue.name}
-                        </h2>
-                        <p>
-                          <BsPersonFill /> {profilevenue.maxGuests}
-                        </p>
-                        <span className={styles.price}>
-                          <p>
-                            NOK {profilevenue.price} <br /> per night
-                          </p>
-                        </span>
+        <div className={styles.cardContainer}>
+          {profileVenues.length === 0 ? (
+            <p>You currently have no venues to manage!</p>
+          ) : (
+            <>
+              {profileVenues
+                .filter((profilevenue) =>
+                  profilevenue.name.toLowerCase().includes(searchValue)
+                )
+                .map((profilevenue) => (
+                  <div key={profilevenue.id}>
+                    <div className={styles.card}>
+                      <div>
+                        {profilevenue.media == 0 ? (
+                          <>
+                            <img
+                              className={styles.venueImage}
+                              src={PlaceholderImage}
+                              alt="placeholder image"
+                              onError={mediaError}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <Carousel>
+                              {profilevenue.media.map((image, index) => {
+                                return (
+                                  <Carousel.Item key={index}>
+                                    <img
+                                      className={styles.venueImage}
+                                      src={image}
+                                      alt={profilevenue.name}
+                                      onError={mediaError}
+                                    />
+                                  </Carousel.Item>
+                                );
+                              })}
+                            </Carousel>
+                          </>
+                        )}
                       </div>
-                    </Link>
+                      <Link to={`/venue/${profilevenue.id}`}>
+                        <div className={styles.cardText}>
+                          <h2 className={styles.cardTitle}>
+                            {profilevenue.name}
+                          </h2>
+                          <p>
+                            <BsPersonFill /> {profilevenue.maxGuests}
+                          </p>
+                          <span className={styles.price}>
+                            <p>
+                              NOK {profilevenue.price} <br /> per night
+                            </p>
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
-          </>
-        )}
+                ))}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </HelmetProvider>
   );
 }
