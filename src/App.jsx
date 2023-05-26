@@ -17,7 +17,6 @@ import Profile from "./pages/Profile/";
 import VenuesByProfile from "./pages/VenueByProfile/";
 import CreateVenue from "./pages/CreateVenue";
 import UpdateVenue from "./pages/UpdateVenue";
-// import UpdateAvatar from "./pages/UpdateAvatar";
 import MyBookings from "./pages/ViewBookingsByProfile";
 
 // Bootstrap import
@@ -44,7 +43,6 @@ function App() {
             <Route path="profile/:name/venues" element={<VenuesByProfile />} />
             <Route path="createvenue" element={<CreateVenue />} />
             <Route path="updatevenue/:id" element={<UpdateVenue />} />
-            {/* <Route path="updateavatar/:name" element={<UpdateAvatar />} /> */}
             <Route path="profile/:name/bookings" element={<MyBookings />} />
           </Route>
         </Routes>
