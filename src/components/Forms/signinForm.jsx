@@ -93,6 +93,7 @@ export default function SignInForm() {
         className={styles.inputSize}
         type="email"
         name="email"
+        id="email"
         placeholder="Please enter your Email"
         {...register("email")}
       />
@@ -104,6 +105,7 @@ export default function SignInForm() {
         className={styles.inputSize}
         type="password"
         name="password"
+        id="password"
         placeholder="Please enter a password"
         {...register("password")}
       />

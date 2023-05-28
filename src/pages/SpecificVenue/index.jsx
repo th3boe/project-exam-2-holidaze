@@ -288,6 +288,32 @@ export default function SpecificVenue() {
                 {venue.meta.pets === true ? "Pets Allowed" : "No Pets Allowed"}
               </p>
             </div>
+            {venue.location.address === "" &&
+            venue.location.city === "" &&
+            venue.location.country === "" ? (
+              ""
+            ) : (
+              <>
+                <div className={styles.locationCard}>
+                  <h3>Venue Location</h3>
+                  {venue.location.address === "" ? (
+                    ""
+                  ) : (
+                    <p>Address: {venue.location.address}</p>
+                  )}
+                  {venue.location.city === "" ? (
+                    ""
+                  ) : (
+                    <p>City: {venue.location.city}</p>
+                  )}
+                  {venue.location.country === "" ? (
+                    ""
+                  ) : (
+                    <p>Country: {venue.location.country}</p>
+                  )}
+                </div>
+              </>
+            )}
             <div>
               {authenticate ? (
                 <>

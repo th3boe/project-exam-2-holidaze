@@ -21,13 +21,13 @@ Built using CSS frameworks and react JS.
 ### Delivery links
 
 - [x] A Gantt chart for project timing
-      https://trello.com/invite/b/a5cvu6aA/ATTI4181d6708099f1dc8ae6c602afd7a1e9F01BD9BC/holidaze
+      https://trello.com/b/a5cvu6aA/holidaze/timeline
 - [x] A design prototype
       https://xd.adobe.com/view/62bf8e4a-92e3-4070-8536-3de4003559e5-37ec/
 - [x] A style guide
       https://xd.adobe.com/view/88281e56-75d7-4a6b-9eaa-06d5254a3685-dd7b/
 - [x] A kanban project board
-      https://trello.com/invite/b/a5cvu6aA/ATTI4181d6708099f1dc8ae6c602afd7a1e9F01BD9BC/holidaze
+      https://trello.com/b/a5cvu6aA/holidaze
 - [x] A repository link
       https://github.com/th3boe/project-exam-2-holidaze
 - [x] A hosted application demo link
@@ -78,6 +78,12 @@ For the hosting services and design applications and planning applications, I ch
 For me I feel that I always fall back on the design, I find this to be a very pleasing and fun activity during every project. This time I used a design that I enjoyed looking at while working on the functionalities. During my busy work time, I still ended up with a need to travel, so for me the design did it's intended job.
 
 I also felt that the react functionalities ended up pretty good, and it all seemed to work, I have mostly enjoyed the whole project process.
+
+### Good to know
+
+I did exclude most of the location values from my specific venue, but have all of them in the create venue form. This to make it possible to add in values if one would want to use the values for sorting etc. The location inputs are defaulted to empty strings.
+
+In the specific venue however I only included address, city and country, and made it so that it would only show if the inputs had any content.
 
 ### Logo
 

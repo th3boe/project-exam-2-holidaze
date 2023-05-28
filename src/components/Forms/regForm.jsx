@@ -101,6 +101,7 @@ export default function RegForm() {
           className={styles.inputSize}
           type="text"
           name="name"
+          id="name"
           placeholder="Enter your name"
           {...register("name")}
         />
@@ -112,6 +113,7 @@ export default function RegForm() {
           className={styles.inputSize}
           type="email"
           name="email"
+          id="email"
           placeholder="Please enter your Email"
           {...register("email")}
         />
@@ -123,6 +125,7 @@ export default function RegForm() {
           className={styles.inputSize}
           type="password"
           name="password"
+          id="password"
           placeholder="Please enter a password"
           {...register("password")}
         />
@@ -134,6 +137,7 @@ export default function RegForm() {
           className={styles.inputSize}
           type="url"
           name="avatar"
+          id="avatar"
           placeholder="Please enter image url"
           {...register("avatar")}
         />
@@ -142,6 +146,7 @@ export default function RegForm() {
         <div>
           <p>Become a manager through Holidaze?</p>
           <label className={styles.switch}>
+            <span className={styles.visuallyHidden}>Toggle Switch</span>
             <input
               type="checkbox"
               name="venueManager"
