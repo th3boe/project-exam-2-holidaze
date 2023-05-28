@@ -16,7 +16,7 @@ export default function CreateNewVenue() {
   const [authenticate] = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [images, setImages] = useState([""]);
+  const [media, setMedia] = useState([""]);
   const [price, setPrice] = useState("");
   const [maxGuests, setMaxGuests] = useState("");
   const [rating, setRating] = useState(0);
@@ -38,7 +38,7 @@ export default function CreateNewVenue() {
   const [formError, setFormError] = useState({
     title: "",
     description: "",
-    images: [""],
+    media: [""],
     price: "",
     maxGuests: "",
     rating: "",
@@ -71,7 +71,7 @@ export default function CreateNewVenue() {
     const venueInfo = {
       name: title,
       description: description,
-      images: images.length > 0 ? images : null,
+      media: media.length > 0 ? media : null,
       price: parseInt(price),
       maxGuests: parseInt(maxGuests),
       rating: parseInt(rating),
@@ -107,7 +107,6 @@ export default function CreateNewVenue() {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
 
       if (response.status === 201) {
         navigate("/venues");
@@ -173,17 +172,17 @@ export default function CreateNewVenue() {
           <p className={styles.errorInput}>{formError.description}</p>
         )}
 
-        <label className={styles.label} htmlFor="images">
+        <label className={styles.label} htmlFor="media">
           Venue Images:
         </label>
         <input
           className={styles.inputSize}
           type="text"
-          id="images"
-          name="images"
-          value={images}
+          id="media"
+          name="media"
+          value={media}
           placeholder="Please enter one or more image urls"
-          onChange={(e) => setImages(e.target.value.split(","))}
+          onChange={(e) => setMedia(e.target.value.split(","))}
         />
 
         <label className={styles.label} htmlFor="price">
@@ -227,7 +226,6 @@ export default function CreateNewVenue() {
           id="rating"
           name="rating"
           value={rating}
-          // min="0"
           placeholder="Please rate venue"
           onChange={(e) => setRating(e.target.value)}
         />
