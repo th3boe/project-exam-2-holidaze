@@ -55,7 +55,7 @@ Built using CSS frameworks and react JS.
 
 ### Added features on the side:
 
-[x] A registered Venue manager may view the venues they have created
+- [x] A registered Venue manager may view the venues they have created
 
 ### WCAG
 
