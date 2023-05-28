@@ -19,6 +19,7 @@ export default function MyBookings() {
   // URL
 
   const action = "/profiles";
+  const venueAction = "/venue";
   const http = useAxios();
   const URL = `${API_HOLIDAZE_URL}${action}/${authenticate.name}?_bookings=true`;
 
@@ -50,6 +51,8 @@ export default function MyBookings() {
       }
     }
     getBookings();
+    // code below was added to ignore due to http added in dependecies ended with bugs.
+    // eslint-disable-next-line
   }, []);
 
   // Content for the above try and catch!
@@ -133,7 +136,7 @@ export default function MyBookings() {
                           <Button
                             name={"Go to Venue"}
                             onClick={() => {
-                              navigate("/venue" + `/${booking.venue.id}`);
+                              navigate(venueAction + `/${booking.venue.id}`);
                             }}
                           />
                         </div>

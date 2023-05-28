@@ -71,7 +71,9 @@ export default function Venues() {
     }
 
     getProfileVenues();
-  }, []);
+    // code below was added to ignore due to http added in dependecies ended with bugs.
+    // eslint-disable-next-line
+  }, [authenticate.name]);
 
   // Content for the above try and catch!
 
@@ -155,12 +157,12 @@ export default function Venues() {
                   <div key={profilevenue.id}>
                     <div className={styles.card}>
                       <div>
-                        {profilevenue.media == 0 ? (
+                        {profilevenue.media >= 0 ? (
                           <>
                             <img
                               className={styles.venueImage}
                               src={PlaceholderImage}
-                              alt="placeholder image"
+                              alt="placeholder"
                               onError={mediaError}
                             />
                           </>

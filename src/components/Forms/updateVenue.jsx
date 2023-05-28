@@ -9,6 +9,7 @@ import styles from "./form.module.css";
 // URL
 
 const action = "/venues";
+const navigateAction = "/venue";
 const URL = API_HOLIDAZE_URL + action;
 
 // Update function.
@@ -39,7 +40,7 @@ export default function UpdateVenueFrom(props) {
     },
   });
 
-  const [formError, setFormError] = useState({
+  const [formError] = useState({
     title: "",
     description: "",
     images: [""],
@@ -74,7 +75,7 @@ export default function UpdateVenueFrom(props) {
   // GET old data from the venue that is being updated.
 
   useEffect(() => {
-    const response = fetch(URL + `/${id}`, {
+    fetch(URL + `/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${authenticate.accessToken}`,
@@ -83,7 +84,7 @@ export default function UpdateVenueFrom(props) {
     })
       .then((response) => response.json())
       .then((data) => setVenue(data));
-  }, [id]);
+  }, [id, authenticate.accessToken]);
 
   // Update (PUT) function.
 
@@ -102,7 +103,7 @@ export default function UpdateVenueFrom(props) {
       const data = await response.json();
 
       if (response.status === 200) {
-        navigate("/venue/" + `${id}`);
+        navigate(navigateAction + `/${id}`);
       }
       return data;
     } catch {

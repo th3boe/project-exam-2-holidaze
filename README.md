@@ -21,13 +21,13 @@ Built using CSS frameworks and react JS.
 ### Delivery links
 
 - [x] A Gantt chart for project timing
-      https://trello.com/b/a5cvu6aA/holidaze/timeline
+      https://trello.com/invite/b/a5cvu6aA/ATTI4181d6708099f1dc8ae6c602afd7a1e9F01BD9BC/holidaze
 - [x] A design prototype
       https://xd.adobe.com/view/62bf8e4a-92e3-4070-8536-3de4003559e5-37ec/
 - [x] A style guide
       https://xd.adobe.com/view/88281e56-75d7-4a6b-9eaa-06d5254a3685-dd7b/
 - [x] A kanban project board
-      https://trello.com/b/a5cvu6aA/holidaze
+      https://trello.com/invite/b/a5cvu6aA/ATTI4181d6708099f1dc8ae6c602afd7a1e9F01BD9BC/holidaze
 - [x] A repository link
       https://github.com/th3boe/project-exam-2-holidaze
 - [x] A hosted application demo link

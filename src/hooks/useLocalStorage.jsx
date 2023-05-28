@@ -1,46 +1,4 @@
-// export function storageSave(theKey, storageValue) {
-//   localStorage.setItem(theKey, JSON.stringify(storageValue));
-// }
-
-// export function save(theKey, storageValue) {
-//   localStorage.setItem(theKey, JSON.stringify(storageValue));
-// }
-
-// export function load(theKey) {
-//   try {
-//     const storageValue = localStorage.getItem(theKey);
-//     return JSON.parse(storageValue);
-//   } catch {
-//     return null;
-//   }
-// }
-
-// export function remove(theKey) {
-//   localStorage.removeItem(theKey);
-// }
-
-// import { useState, useEffect } from "react";
-
-// export const useStorage = (theKey, defaultValue) => {
-//   const [storageValue, setStorageValue] = useState(() => {
-//     return getStorage(theKey, defaultValue);
-//   });
-//   useEffect(() => {
-//     localStorage.setItem(theKey, JSON.stringify(storageValue));
-//   }, [theKey, storageValue]);
-
-//   return [storageValue, setStorageValue];
-// };
-
-// export default function getStorage(theKey, defaultValue) {
-//   if (typeof window !== "undefined") {
-//     const saved = localStorage.getItem(theKey);
-//     const initial = saved !== null ? JSON.parse(saved) : defaultValue;
-//     return initial;
-//   }
-// }
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Hook
 export default function useLocalStorage(key, initialValue) {
