@@ -15,7 +15,7 @@ export default function Register() {
           <link
             rel="icon"
             type="image/png"
-            href="/public/favicon.ico"
+            href="../../images/logo-mobile.png"
             sizes="16x16"
           />
         </Helmet>
@@ -29,8 +29,8 @@ export default function Register() {
               <img src={Icon} alt="Holidaze Logo Icon" height="120vmin" />
               <h2>Join our Holidaze family</h2>
               <p>
-                Do you want to become a customer to be able to rent all of the
-                amazing venues that has been posted on our Holidaze page, then
+                Do you want to become a customer and be able to rent all of the
+                amazing venues that have been posted on our Holidaze page, then
                 you have come to the right place.
               </p>
               <p>

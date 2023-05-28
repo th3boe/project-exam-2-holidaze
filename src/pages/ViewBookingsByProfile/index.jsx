@@ -16,6 +16,12 @@ export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [authenticate] = useContext(AuthContext);
 
+  // URL
+
+  const action = "/profiles";
+  const http = useAxios();
+  const URL = `${API_HOLIDAZE_URL}${action}/${authenticate.name}?_bookings=true`;
+
   // Navigate function, and function to navigate to profile
 
   const navigate = useNavigate();
@@ -25,12 +31,6 @@ export default function MyBookings() {
   const handleOnClickVenues = () => {
     navigate("/venues");
   };
-
-  // URL
-
-  const action = "/profiles";
-  const http = useAxios();
-  const URL = `${API_HOLIDAZE_URL}${action}/${authenticate.name}?_bookings=true`;
 
   // Fetch for the bookings
 
@@ -82,7 +82,7 @@ export default function MyBookings() {
           <link
             rel="icon"
             type="image/png"
-            href="/public/favicon.ico"
+            href="../../images/logo-mobile.png"
             sizes="16x16"
           />
         </Helmet>
