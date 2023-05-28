@@ -7,27 +7,17 @@
 .informationCard {
   border: 1.5px solid black;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
   color: black;
   padding: 10px;
   margin: 20px;
   max-width: 800px;
+  font-weight: 500;
   position: relative;
 }
 
 .title {
   font-weight: 300;
-}
-
-.allVenues a {
-  color: #a34900;
-  font-weight: 600;
-}
-
-.allVenues a:hover {
-  color: black;
-  font-weight: 600;
-  transition: color 0.5s;
 }
 
 @media only screen and (min-width: 795px) {
