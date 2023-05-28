@@ -30,11 +30,11 @@ export default function UpdateVenueFrom(props) {
       pets: false,
     },
     location: {
-      address: "Unknown",
-      city: "Unknown",
-      zip: "Unknown",
-      country: "Unknown",
-      continent: "Unknown",
+      address: "",
+      city: "",
+      zip: "",
+      country: "",
+      continent: "",
       lat: 0,
       lng: 0,
     },
@@ -54,11 +54,11 @@ export default function UpdateVenueFrom(props) {
       pets: false,
     },
     location: {
-      address: "Unknown",
-      city: "Unknown",
-      zip: "Unknown",
-      country: "Unknown",
-      continent: "Unknown",
+      address: "",
+      city: "",
+      zip: "",
+      country: "",
+      continent: "",
       lat: 0,
       lng: 0,
     },
@@ -227,6 +227,7 @@ export default function UpdateVenueFrom(props) {
           <div>
             <p>WiFi?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="wifi"
@@ -239,6 +240,7 @@ export default function UpdateVenueFrom(props) {
           <div>
             <p>Parking?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="parking"
@@ -254,6 +256,7 @@ export default function UpdateVenueFrom(props) {
           <div>
             <p>Breakfast?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="breakfast"
@@ -266,6 +269,7 @@ export default function UpdateVenueFrom(props) {
           <div>
             <p>Pets?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="pets"

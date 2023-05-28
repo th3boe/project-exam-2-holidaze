@@ -27,11 +27,11 @@ export default function CreateNewVenue() {
     pets: false,
   });
   const [location, setLocation] = useState({
-    address: "Unknown",
-    city: "Unknown",
-    zip: "Unknown",
-    country: "Unknown",
-    continent: "Unknown",
+    address: "",
+    city: "",
+    zip: "",
+    country: "",
+    continent: "",
     lat: 0,
     lng: 0,
   });
@@ -49,11 +49,11 @@ export default function CreateNewVenue() {
       pets: false,
     },
     location: {
-      address: "Unknown",
-      city: "Unknown",
-      zip: "Unknown",
-      country: "Unknown",
-      continent: "Unknown",
+      address: "",
+      city: "",
+      zip: "",
+      country: "",
+      continent: "",
       lat: 0,
       lng: 0,
     },
@@ -239,6 +239,7 @@ export default function CreateNewVenue() {
           <div>
             <p>WiFi?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="wifi"
@@ -251,6 +252,7 @@ export default function CreateNewVenue() {
           <div>
             <p>Parking?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="parking"
@@ -266,6 +268,7 @@ export default function CreateNewVenue() {
           <div>
             <p>Breakfast?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="breakfast"
@@ -278,6 +281,7 @@ export default function CreateNewVenue() {
           <div>
             <p>Pets?</p>
             <label className={styles.switch}>
+              <span className={styles.visuallyHidden}>Toggle Switch</span>
               <input
                 type="checkbox"
                 name="pets"
