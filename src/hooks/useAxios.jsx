@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
-// import { API_HOLIDAZE_URL } from "../constants/api";
 
 const URL = "https://api.noroff.dev/api/v1/holidaze";
 
