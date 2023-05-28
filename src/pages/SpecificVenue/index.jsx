@@ -20,9 +20,11 @@ import "react-datepicker/dist/react-datepicker.css";
 // URL for getting specific venue, and making a booking.
 
 const action = "/venues";
+const updateVenue = "/updatevenue";
 const method = "GET";
 
 const venueURL = API_HOLIDAZE_URL + action;
+const URLend = "?_owner=true&_bookings=true";
 
 const bookingAction = "/bookings";
 const bookingURL = API_HOLIDAZE_URL + bookingAction;
@@ -44,7 +46,7 @@ export default function SpecificVenue() {
     startDate: "",
     endDate: "",
   });
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
   const [addedBooking, setAddedBooking] = useState(false);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function SpecificVenue() {
 
   const navigate = useNavigate();
   const handleOnClickEditVenue = () => {
-    navigate("/updatevenue" + `/${id}`);
+    navigate(updateVenue + `/${id}`);
   };
 
   const placeholder = "https://picsum.photos/200";
@@ -80,10 +82,7 @@ export default function SpecificVenue() {
         setLoader(true);
         setUpsError(false);
 
-        const response = await fetch(
-          venueURL + `/${id}` + "?_owner=true&_bookings=true",
-          { method }
-        );
+        const response = await fetch(venueURL + `/${id}` + URLend, { method });
         const json = await response.json();
 
         setVenue(json);
@@ -96,7 +95,7 @@ export default function SpecificVenue() {
     }
 
     getVenue();
-  }, []);
+  }, [id]);
 
   // Content for the above try and catch!
 
@@ -169,7 +168,7 @@ export default function SpecificVenue() {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
+      await response.json();
 
       if (response.status === 201) {
         setFormError(false);
@@ -237,12 +236,12 @@ export default function SpecificVenue() {
               </p>
             </div>
             <div>
-              {venue.media == 0 ? (
+              {venue.media >= 0 ? (
                 <>
                   <img
                     className={styles.carouselImage}
                     src={PlaceholderImage}
-                    alt="placeholder image venue"
+                    alt="placeholder"
                     onError={mediaError}
                   />
                 </>

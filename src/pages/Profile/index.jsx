@@ -40,20 +40,27 @@ export default function Profile() {
   const [show, setShow] = useState(false);
   const [authenticate] = useContext(AuthContext);
 
+  // actions for navigation to prevent eslint error
+
+  const createvenue = "/createvenue";
+  const profile = "/profile";
+  const venues = "/venues";
+  const bookings = "/bookings";
+
   // Navigation for buttons!
 
   const navigate = useNavigate();
   const handleOnClickCreateVenue = () => {
-    navigate("/createvenue");
+    navigate(createvenue);
   };
   const handleOnClickMyVenues = () => {
-    navigate("/profile" + `/${authenticate.name}` + "/venues");
+    navigate(profile + `/${authenticate.name}` + venues);
   };
   const handleOnClickAllVenues = () => {
-    navigate("/venues");
+    navigate(venues);
   };
   const handleOnClickMyBookings = () => {
-    navigate("/profile" + `/${authenticate.name}` + "/bookings");
+    navigate(profile + `/${authenticate.name}` + bookings);
   };
 
   // Modal for avatar update.
@@ -61,9 +68,12 @@ export default function Profile() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // placeholder image for avatar
+  // error handling for avatar.
 
   const placeholder = "https://picsum.photos/200";
+  const mediaError = (e) => {
+    e.target.src = placeholder;
+  };
 
   // URL
 
@@ -92,6 +102,8 @@ export default function Profile() {
       }
     }
     getProfile();
+    // code below was added to ignore due to http added in dependecies ended with bugs.
+    // eslint-disable-next-line
   }, []);
 
   // Content for the above try and catch!
@@ -178,6 +190,7 @@ export default function Profile() {
                     className={styles.avatar}
                     src={user.avatar}
                     alt={user.name}
+                    onError={mediaError}
                   />
                 )}
               </div>

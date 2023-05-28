@@ -10,6 +10,7 @@ import styles from "./nav.module.css";
 
 export default function HeaderNav() {
   const [authenticate, setAuthenticate] = useContext(AuthContext);
+  const profile = "/profile";
 
   // sign out functionality
 
@@ -57,7 +58,7 @@ export default function HeaderNav() {
                   Venues
                 </NavLink>
                 <NavLink
-                  to={"/profile" + `/${authenticate.name}`}
+                  to={profile + `/${authenticate.name}`}
                   className={(navigation) =>
                     navigation.isActive ? styles.active : ""
                   }

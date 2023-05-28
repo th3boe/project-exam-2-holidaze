@@ -12,6 +12,7 @@ import styles from "./form.module.css";
 // URL
 
 const action = "/login";
+const navigateAction = "/profile";
 const URL = API_HOLIDAZE_URL + TOKEN_AUTH + action;
 
 // Validation requirements
@@ -43,8 +44,8 @@ export default function SignInForm() {
     resolver: yupResolver(schema),
   });
 
-  const [submitForm, setSubmitForm] = useState(false);
-  const [formError, setFormError] = useState(false);
+  const [, setSubmitForm] = useState(false);
+  const [, setFormError] = useState(false);
   const [, setAuthenticate] = useContext(AuthContext);
 
   // Navigate to Profile when sign in response ok.
@@ -62,11 +63,13 @@ export default function SignInForm() {
     try {
       const response = await axios.post(URL, options);
 
+      console.log(response.name);
+
       if (response.status === 200) {
         setSubmitForm(true);
         setFormError(false);
         setAuthenticate(response.data);
-        navigate("/profile" + `/${response.data.name}`);
+        navigate(navigateAction + `/${response.data.name}`);
       }
 
       if (response.status !== 200) {

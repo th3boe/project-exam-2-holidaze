@@ -117,12 +117,12 @@ export default function Venues() {
               <div key={venue.id}>
                 <div className={styles.card}>
                   <div>
-                    {venue.media == 0 ? (
+                    {venue.media >= 0 ? (
                       <>
                         <img
                           className={styles.venueImage}
                           src={PlaceholderImage}
-                          alt="placeholder image"
+                          alt="placeholder"
                           onError={mediaError}
                         />
                       </>

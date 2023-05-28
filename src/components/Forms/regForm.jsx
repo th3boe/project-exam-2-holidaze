@@ -48,8 +48,8 @@ export default function RegForm() {
     resolver: yupResolver(schema),
   });
 
-  const [submitForm, setSubmitForm] = useState(false);
-  const [formError, setFormError] = useState(false);
+  const [, setSubmitForm] = useState(false);
+  const [, setFormError] = useState(false);
 
   // Navigate to sign in when registered ok.
 
