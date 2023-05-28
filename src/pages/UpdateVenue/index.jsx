@@ -14,7 +14,7 @@ export default function UpdateVenue() {
           <link
             rel="icon"
             type="image/png"
-            href="/public/favicon.ico"
+            href="../../images/logo-mobile.png"
             sizes="16x16"
           />
         </Helmet>
