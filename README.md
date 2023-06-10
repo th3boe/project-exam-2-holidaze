@@ -1,3 +1,5 @@
+# Project-Exam-2-Holidaze
+
 ![image](/src/images/Holidaze-preview-image.png)
 
 Above is a screenshot of the venues page and profile page from a venue booking page named Holidaze made as part of my second project exam.
